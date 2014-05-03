@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using Newtonsoft.Json;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,20 @@ namespace MessageQ
 {
     /* usage (producer)
      * 
-     * var queue = MessageQ->new;
+     * var queue = MessageQ->new("exchange_name");
      * queue->Publish('render', renderOptions);
      * 
      */
+
     public class MessageQ
     {
-        public MessageQ()
+        private const string DEFAULT_EXCHANGE = "cards"; 
+        private string _exchange { get; set; }
+
+        public MessageQ(string exchange = DEFAULT_EXCHANGE)
         {
-           Channel().ExchangeDeclare("cards", "direct");
+            _exchange = exchange;
+            Channel().ExchangeDeclare(_exchange, "direct");
         }
 
         private IModel Channel()
@@ -30,11 +36,14 @@ namespace MessageQ
         public void Publish(string key, object data)
         {
             var channel = Channel();
-            var body = Encoding.UTF8.GetBytes(data.ToString());
+            var serialized_json = JsonConvert.SerializeObject(data);
+            var octets = Encoding.UTF8.GetBytes(serialized_json);
+            
+            // Console.WriteLine(serialized_json);
             var basicProperties = channel.CreateBasicProperties();
             basicProperties.Headers = new Dictionary<string, object>();
             basicProperties.DeliveryMode = 1;
-            channel.BasicPublish("cards", key, basicProperties, body);
+            channel.BasicPublish(_exchange, key, basicProperties, octets);
         }
     }
 }
