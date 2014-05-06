@@ -14,7 +14,7 @@ namespace MessageQ
         HelpText = "Message to send")]
         public string Message { get; set; }
 
-        [Option('r', "route", DefaultValue = "render", Required = false,
+        [Option('r', "route", DefaultValue = "Render", Required = false,
         HelpText = "routing key to use")]
         public string RoutingKey { get; set; }
 
@@ -31,6 +31,24 @@ namespace MessageQ
             return HelpText.AutoBuild(this,
                 (HelpText current) => HelpText.DefaultParsingErrorsHandler(this, current));
         }
+    }
+
+    class Command { }
+    class RenderCommand : Command
+    {
+        public string Message { get; set; }
+        public int Count { get; set; }
+    }
+
+    class ImportCommand : Command
+    {
+        public string Message { get; set; }
+        public int Whatever { get; set; }
+    }
+
+    class PingCommand : Command
+    {
+        public string Message { get; set; }
     }
 
     class Publish
@@ -50,8 +68,23 @@ namespace MessageQ
         private static void PublishMessage(Options options)
         {
             var messageQ = new MessageQ();
-            var data = new { foo = options.Message, baz = 42 };
-            messageQ.Publish(options.RoutingKey, data);
+            Command data;
+            if (options.RoutingKey.ToLower() == "ping")
+            {
+                data = new PingCommand { Message = options.Message };
+                messageQ.Broadcast(data);
+            }
+            else if (options.RoutingKey.ToLower() == "render")
+            {
+                data = new RenderCommand { Message = options.Message, Count = 42 };
+                messageQ.Publish(data);
+            }
+            else
+            {
+                data = new ImportCommand { Message = options.Message, Whatever = 33 };
+                messageQ.Publish(data);
+            }
+            
             if (options.Verbose) Console.WriteLine("published.");
         }
     }
