@@ -1,6 +1,7 @@
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Unity.Mvc4;
+using MvcApplication2.Infrastructure.Managers;
 
 namespace MvcApplication2
 {
@@ -22,7 +23,8 @@ namespace MvcApplication2
       // register all your components with the container here
       // it is NOT necessary to register your controllers
 
-      // e.g. container.RegisterType<ITestService, TestService>();    
+      // e.g. container.RegisterType<ITestService, TestService>();
+      container.RegisterType<IManager, ContactManager>();
       RegisterTypes(container);
 
       return container;
