@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 /** Domain Layer
  * 
- * // Singleton, must init with
- * DomainLayer.Setup(...)
+ * // we need an instance of a custom registrar to be independent from our DI container
+ * var domain = new DomainLayer(registrar);
  * 
  * // Access subdomains
- * DomainLayer.Instance().measurement
+ * domain.measurement
  * 
  * 
  * 
@@ -25,6 +25,7 @@ namespace MvcApplication2.Domain
     {
         // a registrar is a generic variant for registering types
         // think: container.Register<IFoo, Foo>();
+        // usage: _registrar.RegisterType<IFoo, Foo>();
         private IRegistrar _registrar;
 
         //// Subdomain(s)

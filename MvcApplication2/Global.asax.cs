@@ -16,18 +16,10 @@ namespace MvcApplication2
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        //private static IWindsorContainer container;
         private static IUnityContainer _container;
 
         private static void BootstrapContainer()
         {
-            // Windsor code:
-            // container = new WindsorContainer().Install(FromAssembly.This());
-
-            // var controllerFactory = new WindsorControllerFactory(container.Kernel);
-            // ControllerBuilder.Current.SetControllerFactory(controllerFactory);
-
-            // Unity code:
             if (_container == null)
                 _container = Bootstrapper.Initialise();
         }
@@ -42,6 +34,7 @@ namespace MvcApplication2
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             BootstrapContainer();
+            // not needed:
             // var factory = new UnityControllerFactory(_container);
             // ControllerBuilder.Current.SetControllerFactory(factory);
         }
