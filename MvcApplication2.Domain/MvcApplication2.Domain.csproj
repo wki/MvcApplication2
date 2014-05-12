@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainLayer.cs" />
+    <Compile Include="IRegistrar.cs" />
     <Compile Include="Measurement.cs" />
     <Compile Include="Migrations\201403231756107_initial.cs" />
     <Compile Include="Migrations\201403231756107_initial.Designer.cs">

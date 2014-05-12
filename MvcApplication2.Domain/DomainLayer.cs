@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ninject;
 
 /** Domain Layer
  * 
@@ -19,49 +18,36 @@ using Ninject;
 
 namespace MvcApplication2.Domain
 {
+    interface Ix { }
+    class X : Ix { }
+
     public class DomainLayer
     {
-        // Ninject
-        public static IKernel _kernel;
+        // a registrar is a generic variant for registering types
+        // think: container.Register<IFoo, Foo>();
+        private IRegistrar _registrar;
 
-        // Subdomain(s)
-        public Measurement measurement {
-            get { return DomainLayer._kernel.Get<Measurement>(); }
-        }
+        //// Subdomain(s)
+        //public Measurement measurement {
+        //    get { return DomainLayer._kernel.Get<Measurement>(); }
+        //}
         
         // constructor. called from setup
-        public DomainLayer()
+        public DomainLayer(IRegistrar registrar)
         {
+            _registrar = registrar;
+
+            Setup();
         }
 
-        // singleton: provide instance method
-        private static DomainLayer _instance;
-        public static DomainLayer Instance
+        protected void Setup()
         {
-            get {
-                if (DomainLayer._instance == null)
-                    throw new UninitializedException();
-                return DomainLayer._instance; 
-            }
-            set { DomainLayer._instance = value; }
+            _registrar.RegisterType<Ix, X>();
+
+            // TODO: Typen registrieren
+            // TODO: alle Subdomains durchgehen
+            // TODO: alle Services instantiieren
         }
-
-
-        // TODO: define arguments
-        public static void Setup()
-        {
-            IKernel kernel = new StandardKernel();
-            DomainLayer._kernel = kernel;
-
-            // setup Subdomain(s)
-            kernel.Bind<Measurement>()
-                  .To<Measurement>()
-                  .InSingletonScope();
-            
-            DomainLayer.Instance = new DomainLayer();
-        }
-
-        
     }
 
     [Serializable]

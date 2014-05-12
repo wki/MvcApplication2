@@ -42,9 +42,8 @@ namespace MvcApplication2
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             BootstrapContainer();
-            // ControllerBuilder.Current.SetControllerFactory(typeof(UnityControllerFactory));
-            var factory = new UnityControllerFactory(_container);
-            ControllerBuilder.Current.SetControllerFactory(factory);
+            // var factory = new UnityControllerFactory(_container);
+            // ControllerBuilder.Current.SetControllerFactory(factory);
         }
 
         protected void Application_End()

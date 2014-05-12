@@ -2,37 +2,62 @@ using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 using MvcApplication2.Infrastructure.Managers;
+using MvcApplication2.Domain;
 
 namespace MvcApplication2
 {
-  public static class Bootstrapper
-  {
-    public static IUnityContainer Initialise()
+    internal class UnityRegistrar : IRegistrar
     {
-      var container = BuildUnityContainer();
+        private readonly IUnityContainer _container;
 
-      DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+        public UnityRegistrar(IUnityContainer container)
+        {
+            _container = container;
+        }
 
-      return container;
+        public void RegisterType<TFrom, TTo>() where TTo : TFrom
+        {
+            _container.RegisterType<TFrom, TTo>();
+        }
     }
 
-    private static IUnityContainer BuildUnityContainer()
+    public static class Bootstrapper
     {
-      var container = new UnityContainer();
+        public static IUnityContainer Initialise()
+        {
+            var container = BuildUnityContainer();
 
-      // register all your components with the container here
-      // it is NOT necessary to register your controllers
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
 
-      // e.g. container.RegisterType<ITestService, TestService>();
-      container.RegisterType<IManager, ContactManager>();
-      RegisterTypes(container);
+            return container;
+        }
 
-      return container;
+        private static IUnityContainer BuildUnityContainer()
+        {
+            var container = new UnityContainer();
+
+            // register all your components with the container here
+            // it is NOT necessary to register your controllers
+
+            // e.g. container.RegisterType<ITestService, TestService>();
+            container.RegisterType<IManager, ContactManager>();
+            SetupDomain(container);
+            RegisterTypes(container);
+
+            return container;
+        }
+
+        public static void SetupDomain(IUnityContainer container)
+        {
+            // maybe, we should make this configurable to setup.
+            var domainLayer = new DomainLayer(new UnityRegistrar(container));
+            container.RegisterInstance(domainLayer);
+        }
+
+        public static void RegisterTypes(IUnityContainer container)
+        {
+            // hier nur die innerhalb der Mvc App registrierten Typen registrieren.
+            // Der Domain kümmert sich um sich selbst
+        }
     }
-
-    public static void RegisterTypes(IUnityContainer container)
-    {
-    
-    }
-  }
 }
