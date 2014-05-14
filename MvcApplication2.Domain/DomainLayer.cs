@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,10 +24,7 @@ namespace MvcApplication2.Domain
 
     public class DomainLayer
     {
-        // a registrar is a generic variant for registering types
-        // think: container.Register<IFoo, Foo>();
-        // usage: _registrar.RegisterType<IFoo, Foo>();
-        private IRegistrar _registrar;
+        private readonly IUnityContainer container;
 
         //// Subdomain(s)
         //public Measurement measurement {
@@ -34,16 +32,16 @@ namespace MvcApplication2.Domain
         //}
         
         // constructor. called from setup
-        public DomainLayer(IRegistrar registrar)
+        public DomainLayer(IUnityContainer container)
         {
-            _registrar = registrar;
+            this.container = container;
 
             Setup();
         }
 
         protected void Setup()
         {
-            _registrar.RegisterType<Ix, X>();
+            container.RegisterType<Ix, X>();
 
             // TODO: Typen registrieren
             // TODO: alle Subdomains durchgehen
