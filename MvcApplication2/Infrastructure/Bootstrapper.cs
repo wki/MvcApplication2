@@ -50,7 +50,7 @@ namespace MvcApplication2
         public static void SetupDomain(IUnityContainer container)
         {
             // maybe, we should make this configurable to setup.
-            var domainLayer = new DomainLayer(new UnityRegistrar(container));
+            var domainLayer = new DomainLayer(container);
             container.RegisterInstance(domainLayer);
         }
 
