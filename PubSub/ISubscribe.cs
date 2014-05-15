@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventBus
 {
-    public interface ISubscribe<T>
+    public interface ISubscribe<in T> where T : class, IEvent
     {
         void Handle(T @event);
     }

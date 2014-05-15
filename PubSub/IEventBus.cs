@@ -8,6 +8,6 @@ namespace EventBus
 {
     public interface IEventBus
     {
-        void Publish<T>(T @event) where T : IEvent;
+        void Publish<T>(T @event) where T : class, IEvent;
     }
 }

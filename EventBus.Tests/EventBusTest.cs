@@ -1,7 +1,10 @@
 ﻿using System;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 using EventBus;
+using System.Reflection;
 
 namespace EventBus.Tests
 {
@@ -38,6 +41,18 @@ namespace EventBus.Tests
         }
 
         public void Handle(BadThingHappened @event)
+        {
+            nrEventsHandled++;
+        }
+    }
+
+    class CService : ServiceBase, ISubscribe<IEvent>
+    {
+        public CService()
+        {
+        }
+
+        public void Handle(IEvent @event)
         {
             nrEventsHandled++;
         }
@@ -149,6 +164,49 @@ namespace EventBus.Tests
             // assert
             Assert.AreEqual(2, a1Service.nrEventsHandled, "subscribed event handled by A1");
             Assert.AreEqual(2, a2Service.nrEventsHandled, "subscribed event handled by A2");
+        }
+
+        [TestMethod]
+        public void EventBus_Publish_Generic_Subscribed_Event()
+        {
+            // arrange
+            var aService = new AService();
+            var cService = new CService();
+            container.RegisterInstance<ISubscribe<GoodThingHappened>>("aService", aService);
+            container.RegisterInstance<ISubscribe<IEvent>>("cService", cService);
+            
+            // var interfaces = new List<Type>(instanceType.GetInterfaces());
+
+            var is_assignable = typeof(ISubscribe<IEvent>).GetType().IsAssignableFrom(typeof(ISubscribe<BadThingHappened>));
+            Console.WriteLine("ISubscribe<IEvent> isAssignableFrom ISubscribe<BadThingHappened>: " + is_assignable);
+            
+            is_assignable = typeof(IEvent).GetType().IsAssignableFrom(typeof(BadThingHappened));
+            Console.WriteLine("IEvent isAssignableFrom BadThingHappened: " + is_assignable);
+            
+            is_assignable = typeof(BadThingHappened).GetType().IsAssignableFrom(typeof(IEvent));
+            Console.WriteLine("BadThingHappened isAssignableFrom IEvent: " + is_assignable);
+
+            Type instanceType = typeof(BadThingHappened); // typeof(ISubscribe<IEvent>);
+            Console.WriteLine("Type: " + instanceType);
+            instanceType
+                // .FindInterfaces(new TypeFilter())
+                .GetInterfaces()
+                // .Where(x => x.IsGenericType)
+                .ToList()
+                .ForEach(x => Console.WriteLine("Interface Type: " + x));
+                // .ForEach(x => container.RegisterInstance(x, cService, x.Name));
+
+            printRegistrations();
+            var bus = new EventBus(container);
+
+            // act
+            bus.Publish(new GoodThingHappened()); // caucht by a+c
+            bus.Publish(new BadThingHappened());  // caught by c
+            bus.Publish(new BadThingHappened());  // caught by c
+
+            // assert
+            Assert.AreEqual(1, aService.nrEventsHandled, "subscribed event A handled");
+            Assert.AreEqual(3, cService.nrEventsHandled, "subscribed event C handled");
         }
     }
 }

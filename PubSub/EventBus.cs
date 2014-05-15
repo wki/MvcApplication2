@@ -20,7 +20,7 @@ namespace EventBus
             this.container = container;
         }
 
-        public void Publish<T>(T @event) where T : IEvent
+        public void Publish<T>(T @event) where T : class, IEvent
         {
             var eventHandlers = container.ResolveAll<ISubscribe<T>>();
             foreach (var eventHandler in eventHandlers)

@@ -62,7 +62,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ContainerRegistrationExtension.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="EventBusTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
