@@ -177,13 +177,16 @@ namespace EventBus.Tests
             
             // var interfaces = new List<Type>(instanceType.GetInterfaces());
 
-            var is_assignable = typeof(ISubscribe<IEvent>).GetType().IsAssignableFrom(typeof(ISubscribe<BadThingHappened>));
+            var is_assignable = typeof(ISubscribe<IEvent>)
+                .IsAssignableFrom(typeof(ISubscribe<BadThingHappened>));
             Console.WriteLine("ISubscribe<IEvent> isAssignableFrom ISubscribe<BadThingHappened>: " + is_assignable);
             
-            is_assignable = typeof(IEvent).GetType().IsAssignableFrom(typeof(BadThingHappened));
+            is_assignable = typeof(IEvent).GetType()
+                .IsAssignableFrom(typeof(BadThingHappened).GetType());
             Console.WriteLine("IEvent isAssignableFrom BadThingHappened: " + is_assignable);
             
-            is_assignable = typeof(BadThingHappened).GetType().IsAssignableFrom(typeof(IEvent));
+            is_assignable = typeof(BadThingHappened).GetType()
+                .IsAssignableFrom(typeof(IEvent).GetType());
             Console.WriteLine("BadThingHappened isAssignableFrom IEvent: " + is_assignable);
 
             Type instanceType = typeof(BadThingHappened); // typeof(ISubscribe<IEvent>);
