@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Castle.Windsor;
+using Castle.Windsor.Mvc;
 using MvcApplication2.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace MvcApplication2
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static IUnityContainer _container;
+        private static IWindsorContainer _container;
 
         private static void BootstrapContainer()
         {
@@ -34,9 +35,13 @@ namespace MvcApplication2
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             BootstrapContainer();
-            // not needed:
+            // not needed -- why???
             // var factory = new UnityControllerFactory(_container);
             // ControllerBuilder.Current.SetControllerFactory(factory);
+
+            var factory = new WindsorControllerFactory(_container.Kernel);
+            ControllerBuilder.Current.SetControllerFactory(factory);
+
         }
 
         protected void Application_End()

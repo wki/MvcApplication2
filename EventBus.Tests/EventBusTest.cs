@@ -1,6 +1,5 @@
 ﻿using Castle.Windsor;
 using System;
-// using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,18 +67,10 @@ namespace EventBus.Tests
     [TestClass]
     public class EventBusTest
     {
-        // private IUnityContainer container { get; set; }
         private IWindsorContainer container { get; set; } 
         
         private void printRegistrations()
         {
-            // Unity only:
-            //foreach (ContainerRegistration item in container.Registrations)
-            //{
-            //    Console.WriteLine(item.GetMappingAsString());
-            //}
-
-            // Windsor only:
             Console.WriteLine("Registrations:");
             foreach (var handler in container.Kernel.GetAssignableHandlers(typeof(object)))
             {
@@ -134,7 +125,6 @@ namespace EventBus.Tests
         {
             // arrange
             var aService = new AService();
-            // container.RegisterInstance<ISubscribe<GoodThingHappened>>("aService", aService);
             container.Register(
                 Component.For<ISubscribe<GoodThingHappened>>().Instance(aService)
             );
@@ -154,8 +144,6 @@ namespace EventBus.Tests
             // arrange
             var aService = new AService();
             var bService = new BService();
-            //container.RegisterInstance<ISubscribe<GoodThingHappened>>("aService", aService);
-            //container.RegisterInstance<ISubscribe<BadThingHappened>>("bService", bService);
             container.Register(
                 Component.For<ISubscribe<GoodThingHappened>>().Instance(aService),
                 Component.For<ISubscribe<BadThingHappened>>().Instance(bService)
@@ -180,8 +168,6 @@ namespace EventBus.Tests
             // arrange
             var a1Service = new AService();
             var a2Service = new AService();
-            //container.RegisterInstance<ISubscribe<GoodThingHappened>>("a1Service", a1Service);
-            //container.RegisterInstance<ISubscribe<GoodThingHappened>>("a2Service", a2Service);
             container.Register(
                 Component.For<ISubscribe<GoodThingHappened>>().Named("a1").Instance(a1Service),
                 Component.For<ISubscribe<GoodThingHappened>>().Named("a2").Instance(a2Service)
@@ -203,66 +189,29 @@ namespace EventBus.Tests
         public void EventBus_Publish_Generic_Subscribed_Event()
         {
             // arrange
-            //var aService = new AService();
-            //var cService = new CService();
-            //container.RegisterInstance<ISubscribe<GoodThingHappened>>("aService", aService);
-            //container.RegisterInstance<ISubscribe<IEvent>>("cService", cService);
             container.Register(
-                //Component.For<ISubscribe<GoodThingHappened>>().Instance(aService),
-                //Component.For<ISubscribe<IEvent>>().Instance(cService),
                 Classes.FromThisAssembly()
-                    // .FromAssemblyContaining<EventBusTest>()
                     .BasedOn<ServiceBase>()
                     .WithService.AllInterfaces()
-                    // .WithService.Base()
-                    // .WithService.Self()
                     .Configure(component => component.Named(component.Implementation.FullName + "XYZ"))
                     .LifestyleSingleton()
-                    // .WithService.AllInterfaces()
-                    //.LifeStyle.Singleton
             );
 
-            AService aService = (AService) container.Resolve<IAService>();
-            CService cService = (CService) container.Resolve<ICService>();
-            
-            // var interfaces = new List<Type>(instanceType.GetInterfaces());
-
-            //var is_assignable = typeof(ISubscribe<IEvent>)
-            //    .IsAssignableFrom(typeof(ISubscribe<BadThingHappened>));
-            //Console.WriteLine("ISubscribe<IEvent> isAssignableFrom ISubscribe<BadThingHappened>: " + is_assignable);
-
-            //is_assignable = typeof(ISubscribe<BadThingHappened>)
-            //    .IsAssignableFrom(typeof(ISubscribe<IEvent>));
-            //Console.WriteLine("ISubscribe<BadThingHappened> isAssignableFrom ISubscribe<IEvent>: " + is_assignable);
-            
-            //is_assignable = typeof(IEvent).GetType()
-            //    .IsAssignableFrom(typeof(BadThingHappened).GetType());
-            //Console.WriteLine("IEvent isAssignableFrom BadThingHappened: " + is_assignable);
-            
-            //is_assignable = typeof(BadThingHappened).GetType()
-            //    .IsAssignableFrom(typeof(IEvent).GetType());
-            //Console.WriteLine("BadThingHappened isAssignableFrom IEvent: " + is_assignable);
-
-            //Type instanceType = typeof(BadThingHappened); // typeof(ISubscribe<IEvent>);
-            //Console.WriteLine("Type: " + instanceType);
-            //instanceType
-            //    // .FindInterfaces(new TypeFilter())
-            //    .GetInterfaces()
-            //    // .Where(x => x.IsGenericType)
-            //    .ToList()
-            //    .ForEach(x => Console.WriteLine("Interface Type: " + x));
-            //    // .ForEach(x => container.RegisterInstance(x, cService, x.Name));
+            AService aService = (AService)container.Resolve<IAService>();
+            BService bService = (BService)container.Resolve<IBService>();
+            CService cService = (CService)container.Resolve<ICService>();
 
             printRegistrations();
             var bus = new EventBus(container);
 
             // act
             bus.Publish(new GoodThingHappened()); // caucht by a+c
-            bus.Publish(new BadThingHappened());  // caught by c
-            bus.Publish(new BadThingHappened());  // caught by c
+            bus.Publish(new BadThingHappened());  // caught by b+c
+            bus.Publish(new BadThingHappened());  // caught by b+c
 
             // assert
             Assert.AreEqual(1, aService.nrEventsHandled, "subscribed event A handled");
+            Assert.AreEqual(2, bService.nrEventsHandled, "subscribed event B handled");
             Assert.AreEqual(3, cService.nrEventsHandled, "subscribed event C handled");
         }
     }

@@ -1,9 +1,9 @@
-﻿using Microsoft.Practices.Unity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.Windsor;
 
 /** Domain Layer
  * 
@@ -19,12 +19,9 @@ using System.Threading.Tasks;
 
 namespace MvcApplication2.Domain
 {
-    interface Ix { }
-    class X : Ix { }
-
     public class DomainLayer
     {
-        private readonly IUnityContainer container;
+        private readonly IWindsorContainer container;
 
         //// Subdomain(s)
         //public Measurement measurement {
@@ -32,7 +29,7 @@ namespace MvcApplication2.Domain
         //}
         
         // constructor. called from setup
-        public DomainLayer(IUnityContainer container)
+        public DomainLayer(IWindsorContainer container)
         {
             this.container = container;
 
@@ -41,7 +38,7 @@ namespace MvcApplication2.Domain
 
         protected void Setup()
         {
-            container.RegisterType<Ix, X>();
+            // container.RegisterType<Ix, X>();
 
             // TODO: Typen registrieren
             // TODO: alle Subdomains durchgehen

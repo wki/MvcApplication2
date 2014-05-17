@@ -1,5 +1,4 @@
 ﻿using Castle.Windsor;
-// using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,6 @@ namespace EventBus
 {
     public class EventBus : IEventBus
     {
-        //private readonly IUnityContainer container;
         private readonly IWindsorContainer container;
 
         public static IEventBus Current { get; private set; }
@@ -29,6 +27,7 @@ namespace EventBus
             _publish<T>(@event, false);
         }
 
+        // must be public to allow reflection to find it
         public void _publish<T>(T @event, bool recursive) where T : class, IEvent
         {
             Console.WriteLine(
@@ -41,44 +40,16 @@ namespace EventBus
                 eventHandler.Handle(@event);
             }
 
-            
-            // IDEA: call Publish recursively for Base-Class and all Interfaces
-            // Remember no of called event handlers and don't call them repeatedly
-            // if no handlers are found.
-
-            //@event
-            //    .GetType()
-            //    .GetInterfaces()
-            //    .ToList()
-            //    .ForEach(x => Console.WriteLine("Would Call: " + x));
-            
-            
             if (!recursive)
             {
                 foreach (var t in @event.GetType().GetInterfaces())
                 {
-                    // Console.WriteLine("Must call: " + this.GetType().GetMethod("_publish"));
                     MethodInfo publishMethod = this.GetType().GetMethod("_publish").MakeGenericMethod(t);
 
-                    Console.WriteLine("Method: " + publishMethod);
+                    // Console.WriteLine("Method: " + publishMethod);
                     publishMethod.Invoke(this, new object[] { @event, true });
                 }
             }
-            
-
-            /*
-            
-            public static T Cast<T>(object o)
-            {
-                return (T)o;
-            }
-
-            // Then invoke this using reflection:
-
-            MethodInfo castMethod = this.GetType().GetMethod("Cast").MakeGenericMethod(t);
-            object castedObject = castMethod.Invoke(null, new object[] { obj });
-            
-            */
         }
     }
 }
