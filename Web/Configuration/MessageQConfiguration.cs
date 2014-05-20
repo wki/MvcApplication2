@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MessageQ;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -7,7 +8,8 @@ using System.Web.Configuration;
 
 namespace Web.Configuration
 {
-    public sealed class MessageQConfiguration : ConfigurationSection
+    public sealed class MessageQConfiguration 
+        : ConfigurationSection, IMessageQConfiguration
     {
         private static MessageQConfiguration instance = null;
 
@@ -26,11 +28,11 @@ namespace Web.Configuration
 
         // <messageQ host="localhost" port="5672" user="guest" password="guest" vhost="/" />
 
-        [ConfigurationProperty("host", DefaultValue="localhost")]
-        public string Host
+        [ConfigurationProperty("hostname", DefaultValue="localhost")]
+        public string HostName
         {
-            get { return (string)base["host"]; }
-            set { base["host"] = value; } 
+            get { return (string)base["hostname"]; }
+            set { base["hostname"] = value; } 
         }
 
         [ConfigurationProperty("port", DefaultValue="5672")]
@@ -40,18 +42,18 @@ namespace Web.Configuration
             set { base["port"] = value; }
         }
 
-        [ConfigurationProperty("vhost", DefaultValue = "/")]
+        [ConfigurationProperty("virtualhost", DefaultValue = "/")]
         public string VirtualHost
         {
-            get { return (string)base["vhost"]; }
-            set { base["vhost"] = value; }
+            get { return (string)base["virtualhost"]; }
+            set { base["virtualhost"] = value; }
         }
 
-        [ConfigurationProperty("user", DefaultValue = "guest")]
-        public string User
+        [ConfigurationProperty("username", DefaultValue = "guest")]
+        public string UserName
         {
-            get { return (string)base["user"]; }
-            set { base["user"] = value; }
+            get { return (string)base["username"]; }
+            set { base["username"] = value; }
         }
 
         [ConfigurationProperty("password", DefaultValue="guest")]

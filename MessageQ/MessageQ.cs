@@ -17,7 +17,7 @@ namespace MessageQ
      * 
      */
 
-    public class MessageQ
+    public class MessageQ : IMessageQConfiguration
     {
         private ConnectionFactory _connectionFactory = null;
         private IConnection _connection = null;
