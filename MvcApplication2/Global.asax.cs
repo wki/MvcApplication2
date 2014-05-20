@@ -1,5 +1,4 @@
 ﻿using Castle.Windsor;
-using Castle.Windsor.Mvc;
 using MvcApplication2.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -36,7 +35,7 @@ namespace MvcApplication2
 
             BootstrapContainer();
 
-            var factory = new WindsorControllerFactory(_container.Kernel);
+            var factory = new WindsorControllerFactory(_container);
             ControllerBuilder.Current.SetControllerFactory(factory);
 
         }

@@ -9,11 +9,9 @@ namespace Web
 {
     public static class Bootstrapper
     {
-        public static IWindsorContainer Initialise()
+        public static IWindsorContainer Initialize()
         {
             var container = BuildWindsorContainer();
-
-            // DependencyResolver.SetResolver(new UnityDependencyResolver(container));
 
             return container;
         }
@@ -30,17 +28,34 @@ namespace Web
             container.Register(
                 Component.For<IManager>().ImplementedBy<ContactManager>()
             );
+            SetupInfrastructure(container);
             SetupDomain(container);
             RegisterTypes(container);
 
             return container;
         }
 
+        public static void SetupInfrastructure(IWindsorContainer container)
+        {
+            // TODO: find a way to use a config:
+
+            // init Logging Framework
+            // init Storage
+            // init Mail Sender
+            // init MessageQ
+
+            // special: Repository might need config.
+        }
+
         public static void SetupDomain(IWindsorContainer container)
         {
-            // maybe, we should make this configurable to setup.
+            // TODO: brauchen wir überhaupt einen Domain Layer als Objekt???
             var domainLayer = new DomainLayer(container);
-            // container.RegisterInstance(domainLayer);
+            
+            // Cross Cutting Concerns: Logging, Transaction
+            // Register all Services
+            // Register all Factories
+            // Register all Repositories (maybe from a different assembly)
         }
 
         public static void RegisterTypes(IWindsorContainer container)

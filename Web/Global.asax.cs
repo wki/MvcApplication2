@@ -19,7 +19,7 @@ namespace Web
         private static void BootstrapContainer()
         {
             if (_container == null)
-                _container = Bootstrapper.Initialise();
+                _container = Bootstrapper.Initialize();
         }
 
         protected void Application_Start()

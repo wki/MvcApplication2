@@ -1,6 +1,5 @@
 using System.Web.Mvc;
 using Castle.Windsor;
-using Castle.Windsor.Mvc;
 using MvcApplication2.Infrastructure.Managers;
 using MvcApplication2.Domain;
 using Castle.MicroKernel.Registration;
