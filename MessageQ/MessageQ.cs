@@ -19,36 +19,78 @@ namespace MessageQ
 
     public class MessageQ
     {
-        private ConnectionFactory _connectionFactory;
-        private IConnection _connection;
+        private ConnectionFactory _connectionFactory = null;
+        private IConnection _connection = null;
+        private IModel _channel = null;
         
+        private ConnectionFactory connectionFactory
+        {
+            get
+            {
+                if (_connectionFactory == null)
+                {
+                    _connectionFactory = new ConnectionFactory()
+                        {
+                            HostName = this.HostName,
+                            Port = this.Port,
+                            VirtualHost = this.VirtualHost,
+                            UserName = this.UserName,
+                            Password = this.Password
+                        };
+                }
+
+                return _connectionFactory;
+            }
+        }
+
+        private IConnection connection
+        {
+            get
+            {
+                if (_connection == null)
+                {
+                    _connection = connectionFactory.CreateConnection();
+                }
+
+                // TODO: can we discover a connection-loss and reconnect?
+
+                return _connection;
+            }
+        }
+
+        private IModel channel
+        {
+            get 
+            {
+                if (_channel == null)
+                {
+                    _channel = connection.CreateModel();
+                }
+
+                return _channel;
+            }
+        }
+
         private const string DEFAULT_EXCHANGE = "xxx";
 
         private string _publish_exchange;
         private string _broadcast_exchange;
 
-        public MessageQ(string exchange = DEFAULT_EXCHANGE)
-            :this(new ConnectionFactory(), exchange)
-        {
-        }
+        public string HostName = "localhost";
+        public int Port = 5672;
+        public string VirtualHost = "/";
+        public string UserName = "guest";
+        public string Password = "guest";
 
-        public MessageQ(ConnectionFactory connectionFactory, string exchange)
+        public MessageQ(string exchange = DEFAULT_EXCHANGE)
         {
-            _connectionFactory = connectionFactory;
-            _connection = _connectionFactory.CreateConnection();
             _publish_exchange = exchange + ".publish";
             _broadcast_exchange = exchange + ".broadcast";
 
-            var channel = Channel();
             channel.ExchangeDeclare(_publish_exchange, "topic");
             channel.ExchangeDeclare(_broadcast_exchange, "fanout");
         }
-
-        private IModel Channel()
-        {
-            return _connection.CreateModel();
-        }
-
+        
         public void Publish<T>(T data)
         {
             var routing_key = data.GetType().FullName;
@@ -63,7 +105,6 @@ namespace MessageQ
 
         private void _emit(Object data, string exchange, string routing_key)
         {
-            var channel = Channel();
             var serialized_json = JsonConvert.SerializeObject(data);
             var octets = Encoding.UTF8.GetBytes(serialized_json);
             

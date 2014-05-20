@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Castle.Windsor;
 using Castle.Windsor.Mvc;
+using Web.Configuration;
 using Web.Infrastructure.Managers;
 using MvcApplication2.Domain;
 using Castle.MicroKernel.Registration;
@@ -42,7 +43,15 @@ namespace Web
             // init Logging Framework
             // init Storage
             // init Mail Sender
-            // init MessageQ
+            var messageQConfig = MessageQConfiguration.Instance;
+            var messageQ = new MessageQ.MessageQ() {
+                HostName = messageQConfig.Host,
+                Port = messageQConfig.Port,
+                VirtualHost = messageQConfig.VirtualHost,
+                UserName = messageQConfig.User,
+                Password = messageQConfig.Password
+            };
+
 
             // special: Repository might need config.
         }

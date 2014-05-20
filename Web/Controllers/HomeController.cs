@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Web.Infrastructure.Managers;
+using Web.Configuration;
 
 namespace Web.Controllers
 {
@@ -18,7 +19,11 @@ namespace Web.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Message = this.manager.SomeValue() + ": Modify this template to jump-start your ASP.NET MVC application.";
+            var messageQConfig = MessageQConfiguration.Instance;
+
+            ViewBag.Message =
+                this.manager.SomeValue() 
+                + ": MessageQ Host = " + messageQConfig.Host;
 
             return View();
         }
