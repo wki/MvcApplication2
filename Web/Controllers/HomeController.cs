@@ -23,7 +23,7 @@ namespace Web.Controllers
 
             ViewBag.Message =
                 this.manager.SomeValue() 
-                + ": MessageQ Host = " + messageQConfig.Host;
+                + ": MessageQ Host = " + messageQConfig.HostName;
 
             return View();
         }

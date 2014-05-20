@@ -76,14 +76,30 @@ namespace MessageQ
         private string _publish_exchange;
         private string _broadcast_exchange;
 
-        public string HostName = "localhost";
-        public int Port = 5672;
-        public string VirtualHost = "/";
-        public string UserName = "guest";
-        public string Password = "guest";
+        public string HostName { get; set; }
+        public int Port { get; set; }
+        public string VirtualHost { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
 
-        public MessageQ(string exchange = DEFAULT_EXCHANGE)
+        public MessageQ(string exchange = DEFAULT_EXCHANGE, IMessageQConfiguration config = null)
         {
+            if (config == null)
+            {
+                HostName = "localhost";
+                Port = 5672;
+                VirtualHost = "/";
+                UserName = "guest";
+                Password = "guest";
+            }
+            else
+            {
+                HostName = config.HostName;
+                Port = config.Port;
+                VirtualHost = config.VirtualHost;
+                UserName = config.UserName;
+                Password = config.Password;
+            }
             _publish_exchange = exchange + ".publish";
             _broadcast_exchange = exchange + ".broadcast";
 

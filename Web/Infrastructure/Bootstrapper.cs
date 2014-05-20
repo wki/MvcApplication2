@@ -44,13 +44,7 @@ namespace Web
             // init Storage
             // init Mail Sender
             var messageQConfig = MessageQConfiguration.Instance;
-            var messageQ = new MessageQ.MessageQ() {
-                HostName = messageQConfig.Host,
-                Port = messageQConfig.Port,
-                VirtualHost = messageQConfig.VirtualHost,
-                UserName = messageQConfig.User,
-                Password = messageQConfig.Password
-            };
+            var messageQ = new MessageQ.MessageQ(config: messageQConfig);
 
 
             // special: Repository might need config.
