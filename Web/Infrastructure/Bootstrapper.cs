@@ -1,13 +1,78 @@
-﻿using System.Web.Mvc;
+﻿using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Mvc;
 using Web.Configuration;
 using Web.Infrastructure.Managers;
+using System.Web.Mvc;
 using MvcApplication2.Domain;
-using Castle.MicroKernel.Registration;
+using MvcApplication2.Domain.Measurement;
+using System.Web.Http;
+using Castle.MicroKernel;
+using System.Web.Http.Dependencies;
+using System;
+using System.Collections.Generic;
 
 namespace Web
 {
+    // see: http://cangencer.wordpress.com/2012/12/22/integrating-asp-net-web-api-with-castle-windsor/
+
+    /*
+    public class WindsorDependencyScope : IDependencyScope
+    {
+        private readonly IKernel container;
+        private readonly IDisposable scope;
+
+        public WindsorDependencyScope(IKernel container)
+        {
+            this.container = container;
+            this.scope = container.BeginScope();
+        }
+
+        public object GetService(Type serviceType)
+        {
+            return this.container.HasComponent(serviceType) ? this.container.Resolve(serviceType) : null;
+        }
+
+        public IEnumerable<object> GetServices(Type serviceType)
+        {
+            return this.container.ResolveAll(serviceType).Cast<object>();
+        }
+
+        public void Dispose()
+        {
+            this.scope.Dispose();
+        }
+    }
+    
+    internal class WindsorDependencyResolver : System.Web.Http.Dependencies.IDependencyResolver
+    {
+        private readonly IKernel container;
+
+        public WindsorDependencyResolver(IKernel container)
+        {
+            this.container = container;
+        }
+
+        public IDependencyScope BeginScope()
+        {
+            return new WindsorDependencyScope(this.container);
+        }
+
+        public object GetService(Type serviceType)
+        {
+            return this.container.HasComponent(serviceType) ? this.container.Resolve(serviceType) : null;
+        }
+
+        public IEnumerable<object> GetServices(Type serviceType)
+        {
+            return this.container.ResolveAll(serviceType).Cast<object>();
+        }
+
+        public void Dispose() { }
+
+    }
+    */
+
     public static class Bootstrapper
     {
         public static IWindsorContainer Initialize()
@@ -33,6 +98,8 @@ namespace Web
             SetupDomain(container);
             RegisterTypes(container);
 
+            RegisterControllers(container);
+
             return container;
         }
 
@@ -57,6 +124,12 @@ namespace Web
             
             // Cross Cutting Concerns: Logging, Transaction
             // Register all Services
+            container.Register(Classes
+                .FromAssemblyInThisApplication()
+                .BasedOn<ICollectService>()  // TODO: IService would be nice.
+                .WithServiceDefaultInterfaces()
+            );
+
             // Register all Factories
             // Register all Repositories (maybe from a different assembly)
         }
@@ -65,12 +138,29 @@ namespace Web
         {
             // hier nur die innerhalb der Mvc App registrierten Typen registrieren.
             // Der Domain kümmert sich um sich selbst
-            container.Register(
-                Classes
-                    .FromThisAssembly()
-                    .BasedOn<IController>()
-                    .LifestyleTransient()
+            container.Register(Classes
+                .FromThisAssembly()
+                .BasedOn<IController>()
+                .LifestyleTransient()
             );
+        }
+
+        public static void RegisterControllers(IWindsorContainer container)
+        {
+            var factory = new WindsorControllerFactory(container.Kernel);
+            ControllerBuilder.Current.SetControllerFactory(factory);
+
+            /*
+             DOES NOT WORK:
+            
+            container.Register(Classes
+                .FromThisAssembly()
+                .BasedOn<ApiController>()
+                .LifestyleScoped()
+            );
+
+            GlobalConfiguration.Configuration.DependencyResolver = new WindsorDependencyResolver(container.Kernel);
+            */
         }
     }
 }

@@ -23,6 +23,7 @@ namespace Web
             logger.Info("initiating container");
             if (container == null)
                 container = Bootstrapper.Initialize();
+
         }
 
         protected void Application_Start()
@@ -37,8 +38,6 @@ namespace Web
 
             BootstrapContainer();
 
-            var factory = new WindsorControllerFactory(container.Kernel);
-            ControllerBuilder.Current.SetControllerFactory(factory);
         }
 
         protected void Application_End()

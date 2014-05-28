@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,15 +11,18 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private IManager manager;
 
         public HomeController(IManager manager)
         {
+            logger.Debug("initiating Home Controller");
             this.manager = manager;
         }
 
         public ActionResult Index()
         {
+            logger.Debug("Home Controller: Index()");
             var messageQConfig = MessageQConfiguration.Instance;
 
             ViewBag.Message =

@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -67,7 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainLayer.cs" />
-    <Compile Include="Measurement.cs" />
+    <Compile Include="Measurement\CollectService.cs" />
+    <Compile Include="Measurement\ICollectService.cs" />
     <Compile Include="Migrations\201403231756107_initial.cs" />
     <Compile Include="Migrations\201403231756107_initial.Designer.cs">
       <DependentUpon>201403231756107_initial.cs</DependentUpon>
@@ -77,9 +81,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Measurement\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
