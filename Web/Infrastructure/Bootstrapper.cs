@@ -125,7 +125,8 @@ namespace Web
             // Cross Cutting Concerns: Logging, Transaction
             // Register all Services
             container.Register(Classes
-                .FromAssemblyInThisApplication()
+                //.FromAssemblyInThisApplication()
+                .FromAssemblyContaining<ICollectService>()
                 .BasedOn<ICollectService>()  // TODO: IService would be nice.
                 .WithServiceDefaultInterfaces()
             );
