@@ -7,8 +7,8 @@
     <ProjectGuid>{22E5B8FE-7A2D-4A0F-A667-5F02274965DC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DDDSkeleton.Infrastructure.Common</RootNamespace>
-    <AssemblyName>DDDSkeleton.Infrastructure.Common</AssemblyName>
+    <RootNamespace>DDDSkeleton</RootNamespace>
+    <AssemblyName>DDDSkeleton</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

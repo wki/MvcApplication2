@@ -2,8 +2,8 @@
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Mvc;
-using MvcApplication2.Domain;
-using MvcApplication2.Domain.Measurement;
+using DDDSkeleton.Domain;
+using MvcApplication2.Domain.Measurement; // to find ICollectService
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -64,15 +64,14 @@ namespace Web
 
         public static void SetupDomain(IWindsorContainer container)
         {
-            // TODO: brauchen wir überhaupt einen Domain Layer als Objekt???
-            var domainLayer = new DomainLayer(container);
             
             // Cross Cutting Concerns: Logging, Transaction
             // Register all Services
             container.Register(Classes
-                //.FromAssemblyInThisApplication()
+                // .FromAssemblyInThisApplication() // does not work
                 .FromAssemblyContaining<ICollectService>()
-                .BasedOn<ICollectService>()  // TODO: IService would be nice.
+                .BasedOn<IService>()
+                // .BasedOn<ICollectService>()  // TODO: IService would be nice.
                 .WithServiceDefaultInterfaces()
             );
 

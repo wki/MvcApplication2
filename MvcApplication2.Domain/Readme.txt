@@ -3,11 +3,10 @@
 
 
 namespace DDD // Basisklassen
-    class Domain
-	    Domain(IUnityContainer)
-	    protected Setup()		// TODO: Services / Sagas initialisieren!!! wegen Subscribe!!!
 	
 	abstract class DomainObject
+
+	abstract class DomainEvent
 		public DateTime occuredOn { get; private set; }
 
 	abstract class EntityBase<IdType>
@@ -21,9 +20,6 @@ namespace DDD // Basisklassen
 
 
 namespace MvcApplication2.Domain  // Domain Implementierung
-    class DomainLayer : Domain
-	    DomainLayer(IUnityContainer)
-
     interface IAllXxx // sample repository
 
 	interface IYyyService : IDomainService

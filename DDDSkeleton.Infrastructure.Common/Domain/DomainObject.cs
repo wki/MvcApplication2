@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDDSkeleton.Infrastructure.Common.Domain
+namespace DDDSkeleton.Domain
 {
     public class DomainObject
     {
