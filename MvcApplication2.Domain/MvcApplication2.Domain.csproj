@@ -69,6 +69,12 @@
   <ItemGroup>
     <Content Include="Readme.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DDDSkeleton\DDDSkeleton.csproj">
+      <Project>{22e5b8fe-7a2d-4a0f-a667-5f02274965dc}</Project>
+      <Name>DDDSkeleton</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

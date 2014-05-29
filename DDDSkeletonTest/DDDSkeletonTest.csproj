@@ -65,7 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DDDSkeleton.Infrastructure.Common\DDDSkeleton.csproj">
+    <ProjectReference Include="..\DDDSkeleton\DDDSkeleton.csproj">
       <Project>{22e5b8fe-7a2d-4a0f-a667-5f02274965dc}</Project>
       <Name>DDDSkeleton</Name>
     </ProjectReference>

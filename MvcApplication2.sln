@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DDD", "DDD", "{F6BFC202-876B-4AD3-8269-C4357A9D4461}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDDSkeleton", "DDDSkeleton.Infrastructure.Common\DDDSkeleton.csproj", "{22E5B8FE-7A2D-4A0F-A667-5F02274965DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDDSkeleton", "DDDSkeleton\DDDSkeleton.csproj", "{22E5B8FE-7A2D-4A0F-A667-5F02274965DC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDDSkeletonTest", "DDDSkeletonTest\DDDSkeletonTest.csproj", "{CCA8B54E-D99A-467D-9B47-B158A1CC7FDB}"
 EndProject

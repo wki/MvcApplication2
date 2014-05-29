@@ -212,6 +212,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DDDSkeleton\DDDSkeleton.csproj">
+      <Project>{22e5b8fe-7a2d-4a0f-a667-5f02274965dc}</Project>
+      <Name>DDDSkeleton</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FileStorage\FileStorage.csproj">
       <Project>{34700690-2c8f-4597-a347-26deb06a0ae7}</Project>
       <Name>FileStorage</Name>
