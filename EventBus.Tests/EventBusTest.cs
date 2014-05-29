@@ -1,4 +1,5 @@
 ﻿using Castle.Windsor;
+// using NLog; // needed for benchmarks below.
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -89,6 +90,74 @@ namespace EventBus.Tests
         {
             container = new WindsorContainer();
         }
+
+        // just a jew stupid benchmarks to see runtimes for NLog things
+        /*
+
+        private void doNothing(object o) {}
+
+        [TestMethod]
+        public void EventBus_Benchmark_GetType_1Mio()
+        {
+            // arrange
+            var aService = new AService();
+
+            // act
+            for (int i = 0; i < 1000000; i++)
+            {
+                doNothing(aService.GetType().FullName);
+            }
+
+            // assert
+            Assert.IsTrue(true, "true");
+        }
+
+        [TestMethod]
+        public void EventBus_Benchmark_GetLogger_10K()
+        {
+            // arrange
+
+            // act
+            for (int i=0; i < 10000; i++)
+            {
+                doNothing(LogManager.GetCurrentClassLogger());
+            }
+
+            // assert
+            Assert.IsTrue(true, "true");
+        }
+
+        [TestMethod]
+        public void EventBus_Benchmark_GetNullLogger_1Mio()
+        {
+            // arrange
+
+            // act
+            for (int i = 0; i < 1000000; i++)
+            {
+                doNothing(LogManager.CreateNullLogger());
+            }
+
+            // assert
+            Assert.IsTrue(true, "true");
+        }
+
+        [TestMethod]
+        public void EventBus_Benchmark_GetNamedLogger_1Mio()
+        {
+            // arrange
+            var aService = new AService();
+
+            // act
+            for (int i = 0; i < 1000000; i++)
+            {
+                doNothing(LogManager.GetLogger(aService.GetType().FullName));
+            }
+
+            // assert
+            Assert.IsTrue(true, "true");
+        }
+        */
 
         // HELP! do not know how to check "uninitialized".
         // [TestMethod]

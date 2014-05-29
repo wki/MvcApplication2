@@ -16,6 +16,9 @@ namespace Web.Controllers
         private IManager manager;
         private ICollectService collectService;
 
+        // nice try but no improvement
+        // public static Lazy<Logger> xlog(() => LogManager.GetCurrentClassLogger());
+
         public HomeController(IManager manager, ICollectService collectService)
         {
             logger.Debug("initiating Home Controller");
