@@ -1,4 +1,4 @@
-﻿using NLog;
+﻿using Common.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        public static ILog Log = LogManager.GetCurrentClassLogger();
         private IManager manager;
         private ICollectService collectService;
 
@@ -21,14 +21,14 @@ namespace Web.Controllers
 
         public HomeController(IManager manager, ICollectService collectService)
         {
-            logger.Debug("initiating Home Controller");
+            Log.Debug("initiating Home Controller");
             this.manager = manager;
             this.collectService = collectService;
         }
 
         public ActionResult Index()
         {
-            logger.Debug("Home Controller: Index()");
+            Log.Debug("Home Controller: Index()");
             var messageQConfig = MessageQConfiguration.Instance;
 
             collectService.DoSomething("adfasdf");

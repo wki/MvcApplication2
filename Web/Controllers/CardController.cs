@@ -1,4 +1,4 @@
-﻿using NLog;
+﻿using Common.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace Web.Controllers
 {
     public class CardController : ApiController
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        public static ILog Log = LogManager.GetCurrentClassLogger();
         private ICollectService collectService;
 
         public CardController(ICollectService collectService)
@@ -22,7 +22,7 @@ namespace Web.Controllers
         // GET: api/Card
         public IEnumerable<string> Get()
         {
-            logger.Debug("Calling 'Get' on card");
+            Log.Debug("Calling 'Get' on card");
 
             collectService.DoSomething("huhu");
 

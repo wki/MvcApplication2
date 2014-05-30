@@ -1,6 +1,6 @@
 ﻿using Castle.Windsor;
 using Castle.Windsor.Mvc;
-using NLog;
+using Common.Logging;
 using Web.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -16,11 +16,11 @@ namespace Web
     public class MvcApplication : System.Web.HttpApplication
     {
         private static IWindsorContainer container;
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        public static ILog Log = LogManager.GetCurrentClassLogger();
 
         private static void BootstrapContainer()
         {
-            logger.Info("initiating container");
+            Log.Info("initiating container");
             if (container == null)
                 container = Bootstrapper.Initialize();
 
@@ -28,7 +28,7 @@ namespace Web
 
         protected void Application_Start()
         {
-            logger.Info("application start");
+            Log.Info("application start");
             
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -42,7 +42,7 @@ namespace Web
 
         protected void Application_End()
         {
-            logger.Info("application end");
+            Log.Info("application end");
             container.Dispose();
         }
     }

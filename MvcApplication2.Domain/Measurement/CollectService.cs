@@ -1,5 +1,5 @@
 ﻿using DDDSkeleton.Domain;
-using NLog;
+using Common.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +10,16 @@ namespace MvcApplication2.Domain.Measurement
 {
     public class CollectService : ICollectService, IService
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        public static ILog Log = LogManager.GetCurrentClassLogger();
 
         public CollectService()
         {
-            logger.Debug("initializing CollectService");
+            Log.Debug("initializing CollectService");
         }
 
         public void DoSomething(string message)
         {
-            logger.Debug("Doing something with Message: " + message);
+            Log.Debug("Doing something with Message: " + message);
         }
     }
 }
