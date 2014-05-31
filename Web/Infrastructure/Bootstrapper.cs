@@ -3,6 +3,7 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Mvc;
 using DDDSkeleton.Domain;
+using EventBus;
 using MvcApplication2.Domain.Measurement; // to find ICollectService
 using System;
 using System.Collections.Generic;
@@ -30,17 +31,14 @@ namespace Web
         {
             var container = new WindsorContainer();
 
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-
             // e.g. container.RegisterType<ITestService, TestService>();
             // container.RegisterType<IManager, ContactManager>();
+            // Testing only:
             container.Register(
                 Component.For<IManager>().ImplementedBy<ContactManager>()
             );
             SetupInfrastructure(container);
             SetupDomain(container);
-            RegisterTypes(container);
 
             RegisterControllers(container);
             RegisterWebApi(container);
@@ -58,6 +56,7 @@ namespace Web
             var messageQConfig = MessageQConfiguration.Instance;
             var messageQ = new MessageQ.MessageQ(config: messageQConfig);
 
+            IEventBus eventBus = new EventBus.EventBus(container);
 
             // special: Repository might need config (db connect string)
         }
@@ -79,8 +78,11 @@ namespace Web
             // Register all Repositories (maybe from a different assembly)
         }
 
-        public static void RegisterTypes(IWindsorContainer container)
+        public static void RegisterControllers(IWindsorContainer container)
         {
+            var factory = new WindsorControllerFactory(container.Kernel);
+            ControllerBuilder.Current.SetControllerFactory(factory);
+
             // hier nur die innerhalb der Mvc App registrierten Typen registrieren.
             // Der Domain kümmert sich um sich selbst
             container.Register(Classes
@@ -88,12 +90,6 @@ namespace Web
                 .BasedOn<IController>()
                 .LifestyleTransient()
             );
-        }
-
-        public static void RegisterControllers(IWindsorContainer container)
-        {
-            var factory = new WindsorControllerFactory(container.Kernel);
-            ControllerBuilder.Current.SetControllerFactory(factory);
         }
 
         public static void RegisterWebApi(IWindsorContainer container)
