@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Castle.Windsor;
+using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+// using Microsoft.Practices.Unity;
+using DDDSkeleton.Domain;
+using DDDSkeleton.DomainEvents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DDDSkeleton.Infrastructure.Common.Domain;
-using DDDSkeleton.Infrastructure.Common.DomainEvents;
-using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace DDDSkeletonTest
 {
@@ -38,6 +42,21 @@ namespace DDDSkeletonTest
     [TestClass]
     public class ServiceTest
     {
+        private void printRegistrations(IWindsorContainer container)
+        {
+            Console.WriteLine("Registrations:");
+            foreach (var handler in container.Kernel.GetAssignableHandlers(typeof(object)))
+            {
+                foreach (var service_name in handler.ComponentModel.Services)
+                {
+                    Console.WriteLine("Service: {0} Name: {1}, Implemented By {2}",
+                        service_name,
+                        handler.ComponentModel.Name,
+                        handler.ComponentModel.Implementation);
+                }
+            }
+        }
+
         [TestMethod]
         public void TestServiceInstantiation()
         {
@@ -82,14 +101,25 @@ namespace DDDSkeletonTest
         public void TestContainerEventHandling()
         {
             var s = new SampleService();
-            var c = new UnityContainer();
-            // c.RegisterInstance(s);
-            //c.RegisterTypes(
-            //    // Registers open generics
-            //    AllClasses.FromLoadedAssemblies(false, false),
-            //    WithMappings.FromAllInterfaces,
-            //    WithName.TypeName);
+            // var c = new UnityContainer();
 
+            
+            // windsor version. no .FromAllAssemblies() existing. difficult.
+            
+            var container = new WindsorContainer();
+
+            container.Register(Classes
+                .FromThisAssembly()
+                // .BasedOn<IHandle<DomainEvent>>()
+                .BasedOn<IService>()
+                .WithService.AllInterfaces()
+                .Configure(c => c.Named("EventHandler:" + c.Implementation.FullName))
+            );
+
+            printRegistrations(container);
+            
+
+            /* unity:
             c.RegisterTypes(
                 AllClasses
                     .FromLoadedAssemblies(false, false)
@@ -97,6 +127,7 @@ namespace DDDSkeletonTest
                 //WithMappings.FromAllInterfaces, // .Where(t => t.Name.StartsWith("IHandle")),
                 t => t.GetInterfaces().Where(x => x.Name.StartsWith("IHandle")),
                 WithName.TypeName);
+
             
 
             Console.WriteLine("Container has {0} Registrations", c.Registrations.Count());
@@ -105,8 +136,10 @@ namespace DDDSkeletonTest
                 //Console.WriteLine("Registered Type: {0} Name: {1} Mapped To: {2}", item.RegisteredType, item.Name, item.MappedToType);
                 Console.WriteLine(item.GetMappingAsString());
             }
-
-            var resolved = c.ResolveAll<IHandle<SomethingHappened>>();
+            */
+            
+            var resolved = container.ResolveAll<IHandle<SomethingHappened>>();
+            // var resolved = c.ResolveAll<IHandle<DomainEvent>>();
 
             // Assert.AreEqual(2, resolved.Count());
             

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 
-namespace DDDSkeleton.Infrastructure.Common.DomainEvents
+namespace DDDSkeleton.DomainEvents
 {
     static class ContainerRegistrationsExtension
     {
