@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventBus
 {
-    public interface IEventBus
+    public interface IHub
     {
         void Publish<T>(T @event) where T : class, IEvent;
     }

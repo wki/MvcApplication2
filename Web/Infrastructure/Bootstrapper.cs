@@ -56,7 +56,8 @@ namespace Web
             var messageQConfig = MessageQConfiguration.Instance;
             var messageQ = new MessageQ.MessageQ(config: messageQConfig);
 
-            IEventBus eventBus = new EventBus.EventBus(container);
+            // Eventbus must know container in order to resolve subscribing classes
+            IHub eventBus = new EventBus.Hub(container);
 
             // special: Repository might need config (db connect string)
         }

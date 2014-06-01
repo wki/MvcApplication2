@@ -10,11 +10,14 @@ using Castle.MicroKernel.Registration;
 
 namespace EventBus.Tests
 {
-    public class GoodThingHappened    : IEvent {}
-    public class BadThingHappened     : IEvent { }
-    public class AnotherThingHappened : IEvent { }
+    interface XEvent {} // will not lead to calling an event handler
+    interface YEvent : IEvent {}
+    public class SomethingHappened    : IEvent, XEvent {}
+    public class GoodThingHappened    : SomethingHappened, YEvent {}
+    public class BadThingHappened     : SomethingHappened {}
+    public class AnotherThingHappened : IEvent {}
 
-    public class ServiceBase
+    public class ServiceBase : IPublish
     {
         public int nrEventsHandled;
 
@@ -91,96 +94,58 @@ namespace EventBus.Tests
             container = new WindsorContainer();
         }
 
-        // just a jew stupid benchmarks to see runtimes for NLog things
-        /*
-
-        private void doNothing(object o) {}
-
         [TestMethod]
-        public void EventBus_Benchmark_GetType_1Mio()
+        public void Type_Interfaces()
         {
             // arrange
-            var aService = new AService();
-
+            var goodThingHappened = new GoodThingHappened();
+ 
             // act
-            for (int i = 0; i < 1000000; i++)
-            {
-                doNothing(aService.GetType().FullName);
-            }
+            var type_names = goodThingHappened
+                .GetType()
+                .GetInterfaces()
+                .OrderBy(x => x.Name)
+                .Select(x => x.Name);
 
             // assert
-            Assert.IsTrue(true, "true");
+            Assert.AreEqual(
+                String.Join("+", type_names),
+                "IEvent+XEvent+YEvent", 
+                "We get all inherited interfaces"
+            );
         }
 
         [TestMethod]
-        public void EventBus_Benchmark_GetLogger_10K()
+        public void Interface_Subclasses()
+        {
+            Assert.IsTrue(
+                typeof(IEvent).IsAssignableFrom(typeof(SomethingHappened)),
+                "a derived class or interface can get assigned to a base interface"
+            );
+        }
+
+        // order of execution unknown. Therefore will fail
+        //[TestMethod]
+        //public void Hub_Uninitialized()
+        //{
+        //    Assert.IsNull(Hub.Current, "Current unset");
+        //}
+
+        [TestMethod]
+        public void Hub_Instantiation()
         {
             // arrange
-
-            // act
-            for (int i=0; i < 10000; i++)
-            {
-                doNothing(LogManager.GetCurrentClassLogger());
-            }
+            var bus = new Hub(container);
 
             // assert
-            Assert.IsTrue(true, "true");
+            Assert.AreEqual(Hub.Current, bus, "Current reflects new bus");
         }
 
         [TestMethod]
-        public void EventBus_Benchmark_GetNullLogger_1Mio()
+        public void Publish_Unsubscribed_Event()
         {
             // arrange
-
-            // act
-            for (int i = 0; i < 1000000; i++)
-            {
-                doNothing(LogManager.CreateNullLogger());
-            }
-
-            // assert
-            Assert.IsTrue(true, "true");
-        }
-
-        [TestMethod]
-        public void EventBus_Benchmark_GetNamedLogger_1Mio()
-        {
-            // arrange
-            var aService = new AService();
-
-            // act
-            for (int i = 0; i < 1000000; i++)
-            {
-                doNothing(LogManager.GetLogger(aService.GetType().FullName));
-            }
-
-            // assert
-            Assert.IsTrue(true, "true");
-        }
-        */
-
-        // HELP! do not know how to check "uninitialized".
-        // [TestMethod]
-        // public void EventBus_Uniinitialized()
-        // {
-        //     Assert.IsNull(EventBus.Current, "Current unset");
-        // }
-
-        [TestMethod]
-        public void EventBus_Instantiation()
-        {
-            // arrange
-            var bus = new EventBus(container);
-
-            // assert
-            Assert.AreEqual(EventBus.Current, bus, "Current reflects new bus");
-        }
-
-        [TestMethod]
-        public void EventBus_Publish_Unsubscribed_Event()
-        {
-            // arrange
-            var bus = new EventBus(container);
+            var bus = new Hub(container);
 
             // act
             bus.Publish(new GoodThingHappened());
@@ -190,7 +155,7 @@ namespace EventBus.Tests
         }
 
         [TestMethod]
-        public void EventBus_Publish_Subscribed_Event()
+        public void Publish_Subscribed_Event()
         {
             // arrange
             var aService = new AService();
@@ -198,7 +163,7 @@ namespace EventBus.Tests
                 Component.For<ISubscribe<GoodThingHappened>>().Instance(aService)
             );
             printRegistrations();
-            var bus = new EventBus(container);
+            var bus = new Hub(container);
 
             // act
             bus.Publish(new GoodThingHappened());
@@ -208,7 +173,7 @@ namespace EventBus.Tests
         }
 
         [TestMethod]
-        public void EventBus_Publish_Multiple_Subscribed_Events()
+        public void Publish_Multiple_Subscribed_Events()
         {
             // arrange
             var aService = new AService();
@@ -219,7 +184,7 @@ namespace EventBus.Tests
             );
             
             printRegistrations();
-            var bus = new EventBus(container);
+            var bus = new Hub(container);
 
             // act
             bus.Publish(new GoodThingHappened());
@@ -232,7 +197,7 @@ namespace EventBus.Tests
         }
 
         [TestMethod]
-        public void EventBus_Publish_Multiply_Subscribed_Event()
+        public void Publish_Multiply_Subscribed_Event()
         {
             // arrange
             var a1Service = new AService();
@@ -242,7 +207,7 @@ namespace EventBus.Tests
                 Component.For<ISubscribe<GoodThingHappened>>().Named("a2").Instance(a2Service)
             );
             printRegistrations();
-            var bus = new EventBus(container);
+            var bus = new Hub(container);
 
             // act
             bus.Publish(new GoodThingHappened());
@@ -255,7 +220,7 @@ namespace EventBus.Tests
         }
 
         [TestMethod]
-        public void EventBus_Publish_Generic_Subscribed_Event()
+        public void Publish_Generic_Subscribed_Event()
         {
             // arrange
             container.Register(
@@ -271,7 +236,7 @@ namespace EventBus.Tests
             CService cService = (CService)container.Resolve<ICService>();
 
             printRegistrations();
-            var bus = new EventBus(container);
+            var bus = new Hub(container);
 
             // act
             bus.Publish(new GoodThingHappened()); // caucht by a+c

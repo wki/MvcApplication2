@@ -65,8 +65,9 @@
   <ItemGroup>
     <Compile Include="EventBusExtension.cs" />
     <Compile Include="IEvent.cs" />
-    <Compile Include="IEventBus.cs" />
-    <Compile Include="EventBus.cs" />
+    <Compile Include="IHub.cs" />
+    <Compile Include="Hub.cs" />
+    <Compile Include="IPublish.cs" />
     <Compile Include="ISubscribe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

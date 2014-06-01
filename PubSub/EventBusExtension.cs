@@ -8,9 +8,9 @@ namespace EventBus
 {
     public static class EventBusExtension
     {
-        public static void Publish<T>(this object obj, IEvent @event)
+        public static void Publish<T>(this IPublish obj, IEvent @event)
         {
-            EventBus.Current.Publish(@event);
+            Hub.Current.Publish(@event);
         }
     }
 }

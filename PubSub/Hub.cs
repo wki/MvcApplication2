@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace EventBus
 {
-    public class EventBus : IEventBus
+    public class Hub : IHub
     {
         public static ILog Log = LogManager.GetCurrentClassLogger();
         private readonly IWindsorContainer container;
 
-        public static IEventBus Current { get; private set; }
+        public static IHub Current { get; private set; }
 
-        public EventBus(IWindsorContainer container)
+        public Hub(IWindsorContainer container)
         {
             // maybe we should die if Current is already set.
             Current = this;
@@ -25,12 +25,14 @@ namespace EventBus
 
         public void Publish<T>(T @event) where T : class, IEvent
         {
-            Log.Debug(m => m("Publishing: {0} Type: {1}", @event.GetType(), typeof(T)));
-            _publish<T>(@event, false);
+            Log.Debug(m => m("Publish: {0} Type: {1}", @event.GetType(), typeof(T)));
+            
+            DispatchEventClass<T>(@event);
+            DispatchParentInterfaces(@event);
         }
 
         // must be public to allow reflection to find it
-        public void _publish<T>(T @event, bool recursive) where T : class, IEvent
+        public void DispatchEventClass<T>(T @event) where T : class, IEvent
         {
             var eventHandlers = container.ResolveAll<ISubscribe<T>>();
             foreach (var eventHandler in eventHandlers)
@@ -38,15 +40,16 @@ namespace EventBus
                 Log.Debug(m => m("Handler: {0}", eventHandler));
                 eventHandler.Handle(@event);
             }
+        }
 
-            if (!recursive)
+        public void DispatchParentInterfaces(IEvent @event)
+        {
+            // Hint: this Query could be cached.
+            foreach (var t in @event.GetType().GetInterfaces().Where(t => typeof(IEvent).IsAssignableFrom(t)))
             {
-                foreach (var t in @event.GetType().GetInterfaces())
-                {
-                    MethodInfo publishMethod = this.GetType().GetMethod("_publish").MakeGenericMethod(t);
+                MethodInfo publishMethod = this.GetType().GetMethod("DispatchEventClass").MakeGenericMethod(t);
 
-                    publishMethod.Invoke(this, new object[] { @event, true });
-                }
+                publishMethod.Invoke(this, new object[] { @event } );
             }
         }
     }
