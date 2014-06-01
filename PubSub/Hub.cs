@@ -34,6 +34,7 @@ namespace EventBus
         // must be public to allow reflection to find it
         public void DispatchEventClass<T>(T @event) where T : class, IEvent
         {
+            T dummy = @event;
             var eventHandlers = container.ResolveAll<ISubscribe<T>>();
             foreach (var eventHandler in eventHandlers)
             {
@@ -47,6 +48,7 @@ namespace EventBus
             // Hint: this Query could be cached.
             foreach (var t in @event.GetType().GetInterfaces().Where(t => typeof(IEvent).IsAssignableFrom(t)))
             {
+                Log.Debug(m => m("Trying to Dispatch Type: {0}", t.FullName));
                 MethodInfo publishMethod = this.GetType().GetMethod("DispatchEventClass").MakeGenericMethod(t);
 
                 publishMethod.Invoke(this, new object[] { @event } );
