@@ -1,7 +1,6 @@
 ﻿using Castle.Windsor;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
-// using Microsoft.Practices.Unity;
 using DDDSkeleton.Domain;
 using DDDSkeleton.DomainEvents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

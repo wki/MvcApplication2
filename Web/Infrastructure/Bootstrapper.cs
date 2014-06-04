@@ -69,13 +69,21 @@ namespace Web
             // Register all Services
             container.Register(Classes
                 // .FromAssemblyInThisApplication() // does not work
-                // .FromAssemblyInDirectory(new AssemblyFilter("bin")).InNamespace("Acme.Crm.Extensions", true)
+                // .FromAssemblyInDirectory(new AssemblyFilter("bin")).InNamespace("MvcApplication2.Domain", true)
                 .FromAssemblyContaining<ICollectService>()
                 .BasedOn<IService>()
-                // .BasedOn<ICollectService>()  // TODO: IService would be nice.
                 // .WithServiceDefaultInterfaces()
                 .WithService.FromInterface()
             );
+
+            // Register event handlers
+            container.Register(Classes
+                .FromAssemblyInDirectory(new AssemblyFilter("bin")).InNamespace("MvcApplication2.Domain", true)
+                .BasedOn<IService>()
+                .WithService.AllInterfaces()
+                .Configure(c => c.Named("EventHandler:" + c.Implementation.FullName))
+            );
+
 
 
 
