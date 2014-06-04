@@ -69,11 +69,15 @@ namespace Web
             // Register all Services
             container.Register(Classes
                 // .FromAssemblyInThisApplication() // does not work
+                // .FromAssemblyInDirectory(new AssemblyFilter("bin")).InNamespace("Acme.Crm.Extensions", true)
                 .FromAssemblyContaining<ICollectService>()
                 .BasedOn<IService>()
                 // .BasedOn<ICollectService>()  // TODO: IService would be nice.
-                .WithServiceDefaultInterfaces()
+                // .WithServiceDefaultInterfaces()
+                .WithService.FromInterface()
             );
+
+
 
             // Register all Factories
             // Register all Repositories (maybe from a different assembly)

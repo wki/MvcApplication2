@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace DDDSkeleton.Domain
 {
-    class ValueObjectBase : DomainObject
+    public interface IRepository
     {
-        public ValueObjectBase()
-        { }
-
-
     }
 }

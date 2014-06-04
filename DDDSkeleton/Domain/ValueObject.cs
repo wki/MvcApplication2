@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace DDDSkeleton.Domain
 {
-    public interface IAggregateRoot
-    { }
+    class ValueObject : DomainObject
+    {
+        public ValueObject()
+        { }
+
+
+    }
 }

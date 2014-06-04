@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DDDSkeleton.Domain;
 
-namespace DDDSkeleton.DomainEvents
+namespace DDDSkeleton.Domain
 {
-    public interface IContainer
+    public interface IFactory
     {
-        List<T> ResolveAll<T>();
     }
 }

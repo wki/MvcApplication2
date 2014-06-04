@@ -8,15 +8,11 @@ namespace DDDSkeleton.Domain
 {
     public class DomainEvent
     {
-        private DateTime _occuredOn = DateTime.Now;
+        public DateTime OccuredOn { get; private set; }
 
         public DomainEvent()
         {
-        }
-
-        public DateTime OccuredOn()
-        {
-            return _occuredOn;
+            OccuredOn = DateTime.Now;
         }
     }
 }

@@ -10,8 +10,7 @@ namespace DDDSkeleton.Domain
     {
         private List<BusinessRule> _brokenRules = new List<BusinessRule>();
 
-        public DomainObject()
-        {}
+        public DomainObject() { }
 
         protected void Validate() { }
 
