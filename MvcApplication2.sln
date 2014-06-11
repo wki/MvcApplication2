@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Tests", "Web.Tests\Web.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthApp", "AuthApp\AuthApp.csproj", "{D3659786-C807-4766-9224-35C5D6CD512A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplication2.Repository.InMemory", "MvcApplication2.Repository.InMemory\MvcApplication2.Repository.InMemory.csproj", "{9C285FE2-5AC0-4554-8BD4-27A67779D014}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,12 @@ Global
 		{D3659786-C807-4766-9224-35C5D6CD512A}.Deploy|Any CPU.Build.0 = Debug|Any CPU
 		{D3659786-C807-4766-9224-35C5D6CD512A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3659786-C807-4766-9224-35C5D6CD512A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C285FE2-5AC0-4554-8BD4-27A67779D014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C285FE2-5AC0-4554-8BD4-27A67779D014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C285FE2-5AC0-4554-8BD4-27A67779D014}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C285FE2-5AC0-4554-8BD4-27A67779D014}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{9C285FE2-5AC0-4554-8BD4-27A67779D014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C285FE2-5AC0-4554-8BD4-27A67779D014}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,5 +192,6 @@ Global
 		{6B3CFF32-7329-4E2E-BEEA-5D9431E51284} = {182BE138-A6E2-446A-BB81-29219523C7D4}
 		{3D7B65CD-9CB4-46B4-ACF4-61BDC7AD03BE} = {182BE138-A6E2-446A-BB81-29219523C7D4}
 		{D3659786-C807-4766-9224-35C5D6CD512A} = {182BE138-A6E2-446A-BB81-29219523C7D4}
+		{9C285FE2-5AC0-4554-8BD4-27A67779D014} = {B4CF4091-AF3A-42B3-98F8-F56BEF1A4E8E}
 	EndGlobalSection
 EndGlobal

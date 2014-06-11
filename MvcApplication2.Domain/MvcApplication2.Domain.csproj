@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="Measurement\CollectService.cs" />
     <Compile Include="Measurement\ICollectService.cs" />
+    <Compile Include="Production\Card.cs" />
+    <Compile Include="Production\IAllCards.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +78,10 @@
     <ProjectReference Include="..\DDDSkeleton\DDDSkeleton.csproj">
       <Project>{22e5b8fe-7a2d-4a0f-a667-5f02274965dc}</Project>
       <Name>DDDSkeleton</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PubSub\EventBus.csproj">
+      <Project>{00f3eb7a-ffbc-473f-a423-af942d80728a}</Project>
+      <Name>EventBus</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

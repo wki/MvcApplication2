@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace DDDSkeleton.Domain
 {
-    class AggregateRoot<IdType> : Entity<IdType>
+    public class AggregateRoot<IdType> : Entity<IdType>
     {
+        public AggregateRoot() : base()
+        {
+        }
+
+        public AggregateRoot(IdType id) : base(id)
+        {
+        }
     }
 }
