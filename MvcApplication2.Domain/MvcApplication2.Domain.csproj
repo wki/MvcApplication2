@@ -79,10 +79,6 @@
       <Project>{22e5b8fe-7a2d-4a0f-a667-5f02274965dc}</Project>
       <Name>DDDSkeleton</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PubSub\EventBus.csproj">
-      <Project>{00f3eb7a-ffbc-473f-a423-af942d80728a}</Project>
-      <Name>EventBus</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

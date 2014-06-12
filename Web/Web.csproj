@@ -234,10 +234,6 @@
       <Project>{615130a6-a1cc-4dad-b73e-6c585293e345}</Project>
       <Name>MvcApplication2.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PubSub\EventBus.csproj">
-      <Project>{00f3eb7a-ffbc-473f-a423-af942d80728a}</Project>
-      <Name>EventBus</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

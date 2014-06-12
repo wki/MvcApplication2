@@ -66,7 +66,6 @@
   <ItemGroup>
     <Compile Include="DomainTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EventTest.cs" />
     <Compile Include="DelegateTest.cs" />
   </ItemGroup>
   <ItemGroup>

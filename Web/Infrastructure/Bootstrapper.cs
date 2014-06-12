@@ -3,7 +3,7 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Mvc;
 using DDDSkeleton.Domain;
-using EventBus;
+using DDDSkeleton.EventBus;
 using MvcApplication2.Domain.Measurement; // to find ICollectService
 using System;
 using System.Collections.Generic;
@@ -57,7 +57,7 @@ namespace Web
             var messageQ = new MessageQ.MessageQ(config: messageQConfig);
 
             // Eventbus must know container in order to resolve subscribing classes
-            IHub eventBus = new EventBus.Hub(container);
+            IHub eventBus = new Hub(container);
 
             // special: Repository might need config (db connect string)
         }
