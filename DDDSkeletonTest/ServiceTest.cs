@@ -11,8 +11,8 @@ using System.Reflection;
 
 namespace DDDSkeletonTest.Service
 {
-    public class SomethingHappened : IEvent {}
-    public class ErrorOccured : IEvent {}
+    public class SomethingHappened : DomainEvent {}
+    public class ErrorOccured : DomainEvent {}
 
     public class SampleService 
         : IService, ISubscribe<SomethingHappened>
@@ -102,9 +102,9 @@ namespace DDDSkeletonTest.Service
         //    var s = new SampleService();
         //    // var c = new UnityContainer();
 
-            
+
         //    // windsor version. no .FromAllAssemblies() existing. difficult.
-            
+
         //    var container = new WindsorContainer();
 
         //    container.Register(Classes
@@ -116,7 +116,7 @@ namespace DDDSkeletonTest.Service
         //    );
 
         //    printRegistrations(container);
-            
+
 
         //    /* unity:
         //    c.RegisterTypes(
@@ -136,12 +136,12 @@ namespace DDDSkeletonTest.Service
         //        Console.WriteLine(item.GetMappingAsString());
         //    }
         //    */
-            
+
         //    var resolved = container.ResolveAll<IHandle<SomethingHappened>>();
         //    // var resolved = c.ResolveAll<IHandle<DomainEvent>>();
 
         //    // Assert.AreEqual(2, resolved.Count());
-            
+
         //    Assert.AreEqual("x", resolved.Select(t => t.ToString()).Aggregate<object>((current, next) => current + ", " + next));
 
         //    // DomainEvents.Raise(new SomethingHappened());
