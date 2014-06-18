@@ -29,6 +29,12 @@ namespace MvcApplication2.Repository.EF
 
     public class RepositoryContext : DbContext
     {
+        public RepositoryContext()
+            // :base(ConfigurationService.ConnectionString)
+            : base("name=DefaultConnection")
+        {
+        }
+
         public DbSet<CardRecord> Cards { get; set; }
     }
 }
