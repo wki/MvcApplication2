@@ -64,6 +64,14 @@
     <Reference Include="Common.Logging.NLog20">
       <HintPath>..\packages\Common.Logging.NLog20.2.2.0\lib\net40\Common.Logging.NLog20.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -233,6 +241,10 @@
     <ProjectReference Include="..\MvcApplication2.Domain\MvcApplication2.Domain.csproj">
       <Project>{615130a6-a1cc-4dad-b73e-6c585293e345}</Project>
       <Name>MvcApplication2.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MvcApplication2.Repository.EF\MvcApplication2.Repository.EF.csproj">
+      <Project>{1b628df5-60ee-4c1f-a77c-b5b111bd03a9}</Project>
+      <Name>MvcApplication2.Repository.EF</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
