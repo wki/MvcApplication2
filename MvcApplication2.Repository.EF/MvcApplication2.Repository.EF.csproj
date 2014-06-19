@@ -50,9 +50,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllCards.cs" />
+    <Compile Include="BusinessCardState.cs" />
+    <Compile Include="HistoryEntryState.cs" />
     <Compile Include="Migrations\201406172047427_Initial.cs" />
     <Compile Include="Migrations\201406172047427_Initial.Designer.cs">
       <DependentUpon>201406172047427_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201406191740070_BusinessCard.cs" />
+    <Compile Include="Migrations\201406191740070_BusinessCard.Designer.cs">
+      <DependentUpon>201406191740070_BusinessCard.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +84,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201406172047427_Initial.resx">
       <DependentUpon>201406172047427_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406191740070_BusinessCard.resx">
+      <DependentUpon>201406191740070_BusinessCard.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
