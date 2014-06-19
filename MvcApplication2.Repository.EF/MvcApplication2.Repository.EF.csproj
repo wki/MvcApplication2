@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllCards.cs" />
-    <Compile Include="ConfigurationService.cs" />
     <Compile Include="Migrations\201406172047427_Initial.cs" />
     <Compile Include="Migrations\201406172047427_Initial.Designer.cs">
       <DependentUpon>201406172047427_Initial.cs</DependentUpon>
