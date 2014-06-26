@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MvcApplication2.Domain.Models;
+using MvcApplication2.Domain;
 
 namespace MvcApplication2.Controllers
 {
@@ -52,13 +52,13 @@ namespace MvcApplication2.Controllers
 
         public ActionResult Bar()
         {
-            string result;
+            string result = "adsf";
 
-            using (var db = new ModelContext())
-            {
-                var person = db.People.Find(1);
-                result = person.Name;
-            }
+            //using (var db = new ModelContext())
+            //{
+            //    var person = db.People.Find(1);
+            //    result = person.Name;
+            //}
             //var db = new ModelContext();
             //var person = db.People.Find(1);
             //result = person.Name;

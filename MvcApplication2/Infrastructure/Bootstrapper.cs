@@ -13,7 +13,6 @@ namespace MvcApplication2
             var container = BuildWindsorContainer();
 
             // DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-
             return container;
         }
 
@@ -38,7 +37,7 @@ namespace MvcApplication2
         public static void SetupDomain(IWindsorContainer container)
         {
             // maybe, we should make this configurable to setup.
-            var domainLayer = new DomainLayer(container);
+            // var domainLayer = new DomainLayer(container);
             // container.RegisterInstance(domainLayer);
         }
 

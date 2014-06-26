@@ -64,6 +64,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplication2.Repository.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplication2.Repository.EF", "MvcApplication2.Repository.EF\MvcApplication2.Repository.EF.csproj", "{1B628DF5-60EE-4C1F-A77C-B5B111BD03A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{5EEA1BF6-91F3-48AB-A879-67901E973FD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -179,6 +181,12 @@ Global
 		{1B628DF5-60EE-4C1F-A77C-B5B111BD03A9}.Deploy|Any CPU.Build.0 = Debug|Any CPU
 		{1B628DF5-60EE-4C1F-A77C-B5B111BD03A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B628DF5-60EE-4C1F-A77C-B5B111BD03A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EEA1BF6-91F3-48AB-A879-67901E973FD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EEA1BF6-91F3-48AB-A879-67901E973FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EEA1BF6-91F3-48AB-A879-67901E973FD9}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EEA1BF6-91F3-48AB-A879-67901E973FD9}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{5EEA1BF6-91F3-48AB-A879-67901E973FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EEA1BF6-91F3-48AB-A879-67901E973FD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
