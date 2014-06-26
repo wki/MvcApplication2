@@ -15,9 +15,9 @@ namespace MvcApplication2.Repository.EF
         {
         }
 
+        
         public DbSet<BusinessCardState> BusinessCards { get; set; }
         public DbSet<HistoryEntryState> HistoryEntries { get; set; }
-
 
     }
 }
