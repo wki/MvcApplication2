@@ -3,27 +3,39 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace Sandbox
 {
     [TestClass]
     public class GenericTypePlayground
     {
         class X<T> { }
+        class Parent { }
+        class Child : Parent { }
 
         [TestMethod]
         public void GenericTypeIs()
         {
             var xb = new X<bool>();
-            
+
             Assert.IsTrue(xb is X<bool>);
+        }
+
+        [TestMethod]
+        public void ChildIsParent()
+        {
+            var p = new Parent();
+            var c = new Child();
+
+            Assert.IsTrue(p is Parent);
+            Assert.IsTrue(c is Parent);
+            Assert.IsTrue(c is Child);
         }
 
         [TestMethod]
         public void GenericTypesDiffer()
         {
-           var xb = new X<bool>();
-            
+            var xb = new X<bool>();
+
             Assert.IsFalse(xb is X<string>);
         }
 
@@ -34,6 +46,7 @@ namespace Sandbox
             var xb2 = new X<bool>();
 
             Assert.AreEqual(xb1.GetType(), xb2.GetType());
+            Assert.AreEqual(typeof(X<bool>), xb1.GetType());
         }
 
         [TestMethod]
@@ -82,7 +95,7 @@ namespace Sandbox
             Assert.AreEqual(2, s.Count);
             Assert.AreEqual("fax", s.Pop());
             Assert.AreEqual("phone", s.Pop());
-            Assert.AreEqual(0, s.Count);            
+            Assert.AreEqual(0, s.Count);
         }
     }
 }
