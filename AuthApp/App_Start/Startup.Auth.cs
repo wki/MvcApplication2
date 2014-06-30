@@ -7,9 +7,9 @@ using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
-using AuthApp.Models;
+using Web.Models;
 
-namespace AuthApp
+namespace Web
 {
     public partial class Startup
     {

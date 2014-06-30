@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(AuthApp.Startup))]
-namespace AuthApp
+[assembly: OwinStartupAttribute(typeof(Web.Startup))]
+namespace Web
 {
     public partial class Startup
     {

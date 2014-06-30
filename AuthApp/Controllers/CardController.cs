@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace AuthApp.Controllers
+namespace Web.Controllers
 {
     [Authorize]
     public class CardController : ApiController

@@ -12,7 +12,7 @@ namespace Web
     {
         public void Configuration(IAppBuilder app)
         {
-            // ConfigureAuth(app); // copied from AuthApp -- activate when ready.
+            ConfigureAuth(app);
             app.Use<WkComponent>(new string[] { "A Special Header for you" });
         }
 
