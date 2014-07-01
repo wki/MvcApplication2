@@ -9,6 +9,7 @@ using MvcApplication2.Domain.Measurement;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class CardController : ApiController
     {
         public static ILog Log = LogManager.GetCurrentClassLogger();
