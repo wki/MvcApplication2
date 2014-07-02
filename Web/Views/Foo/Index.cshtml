@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html ng-app="WkiApp">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body ng-controller="StartupController">
+    <h1>angular test</h1>
+    <div>
+    <label>Your Name:
+        <input type="text" ng-model="greeter.name" />
+    </label>
+    </div>
+    <div>
+        {{greeter.greeting()}}
+    </div>
+</body>
+@Scripts.Render("~/bundles/angular")
+@Scripts.Render("~/bundles/site")
+</html>
