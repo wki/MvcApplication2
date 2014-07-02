@@ -24,7 +24,8 @@ namespace Web
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                      "~/Scripts/angular.js"));
+                      "~/Scripts/angular.js",
+                      "~/Scripts/angular-resource.js"));
 
             // Hint: a Bundle is not minified
             bundles.Add(new Bundle("~/bundles/site").Include(

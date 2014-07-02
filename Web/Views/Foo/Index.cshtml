@@ -10,16 +10,32 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 </head>
-<body ng-controller="StartupController">
+<body>
     <h1>angular test</h1>
-    <div>
-    <label>Your Name:
-        <input type="text" ng-model="greeter.name" />
-    </label>
-    </div>
-    <div>
-        {{greeter.greeting()}}
-    </div>
+    <fieldset ng-controller="StartupController">
+        <legend>Binding demo</legend>
+        <div>
+            <label>
+                Your Name:
+                <input type="text" ng-model="greeter.name" />
+            </label>
+        </div>
+        <div>
+            {{greeter.greeting()}}
+        </div>
+    </fieldset>
+    <fieldset ng-controller="InfoController">
+        <legend>Ajax Demo</legend>
+        <div>
+            <label>
+                Enter ID:
+                <input type="number" ng-model="info.id" />
+            </label>
+        </div>
+        <div>
+            {{info.data()}}
+        </div>
+    </fieldset>
 </body>
 @Scripts.Render("~/bundles/angular")
 @Scripts.Render("~/bundles/site")
