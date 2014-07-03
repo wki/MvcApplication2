@@ -25,15 +25,19 @@
         </div>
     </fieldset>
     <fieldset ng-controller="InfoController">
-        <legend>Ajax Demo</legend>
-        <div>
+        <legend>Ajax Demo</legend>    
+        <form ng-submit="update()">
+            <p>
             <label>
                 Enter ID:
-                <input type="number" ng-model="info.id" />
+                <input type="number" ng-model="id" ng-change="update()"/>
             </label>
-        </div>
+            </p>
+            <input type="submit" value="update"/>
+            {{counter}}
+        </form>
         <div>
-            {{info.data()}}
+            {{data}}
         </div>
     </fieldset>
 </body>
