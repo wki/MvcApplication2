@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -12,37 +11,42 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <div data-wk-navbar />
+    <div data-wk-navbar></div>
 
-    <h1>angular test</h1>
-    <fieldset ng-controller="StartupController">
-        <legend>Binding demo</legend>
-        <div>
-            <label>
-                Your Name:
-                <input type="text" ng-model="greeter.name" />
-            </label>
-        </div>
-        <div>
-            {{greeter.greeting()}}
-        </div>
-    </fieldset>
-    <fieldset ng-controller="InfoController">
-        <legend>Ajax Demo</legend>    
-        <form ng-submit="update()">
-            <p>
-            <label>
-                Enter ID:
-                <input type="number" ng-model="id" ng-change="update()"/>
-            </label>
-            </p>
-            <input type="submit" value="update"/>
-            {{counter}}
-        </form>
-        <div>
-            {{data}}
-        </div>
-    </fieldset>
+    <div class="jumbotron">
+        <h1>angular test</h1>
+    </div>
+
+    <div class="row">
+        <fieldset ng-controller="StartupController" class="col-md-6">
+            <legend>Binding demo</legend>
+            <div>
+                <label>
+                    Your Name:
+                    <input type="text" ng-model="greeter.name" />
+                </label>
+            </div>
+            <div>
+                {{greeter.greeting()}}
+            </div>
+        </fieldset>
+        <fieldset ng-controller="InfoController" class="col-md-6">
+            <legend>Ajax Demo</legend>
+            <form ng-submit="update()">
+                <p>
+                    <label>
+                        Enter ID:
+                        <input type="number" ng-model="id" ng-change="update()" />
+                    </label>
+                </p>
+                <input type="submit" value="update" />
+                {{counter}}
+            </form>
+            <div>
+                {{data}}
+            </div>
+        </fieldset>
+    </div>
 </body>
 @*@Scripts.Render("~/bundles/bootstrap")*@
 @Scripts.Render("~/bundles/angular")
