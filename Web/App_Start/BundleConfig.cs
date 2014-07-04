@@ -25,7 +25,8 @@ namespace Web
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                       "~/Scripts/angular.js",
-                      "~/Scripts/angular-resource.js"));
+                      "~/Scripts/angular-resource.js",
+                      "~/Scripts/angular-route.js"));
 
             // Hint: a Bundle is not minified
             bundles.Add(new Bundle("~/bundles/site").Include(

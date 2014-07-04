@@ -8,9 +8,12 @@
 <html ng-app="WkiApp">
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Angular Demo</title>
+    @Styles.Render("~/Content/css")
 </head>
 <body>
+    <div data-wk-navbar />
+
     <h1>angular test</h1>
     <fieldset ng-controller="StartupController">
         <legend>Binding demo</legend>
@@ -41,6 +44,7 @@
         </div>
     </fieldset>
 </body>
+@*@Scripts.Render("~/bundles/bootstrap")*@
 @Scripts.Render("~/bundles/angular")
 @Scripts.Render("~/bundles/site")
 </html>

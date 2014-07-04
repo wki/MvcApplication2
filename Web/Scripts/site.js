@@ -4,7 +4,26 @@
 */
 
 (function () {
-    var app = angular.module("WkiApp", []);
+    var app = angular.module("WkiApp", ["ngRoute"]);
+
+    /////////////// Top Navbar
+    app.directive("wkNavbar", [function () {
+        return {
+            restrict: "ACE",
+            templateUrl: "/templates/wk-navbar.html"
+        };
+    }]);
+
+
+    //app.config(["$routeProvider", function ($routeProvider) {
+    //    $routeProvider
+    //        .when("/xxx", {
+    //            templateURL: "xxx.html",
+    //            controller: "XxxController"
+    //        })
+    //        .otherwise({ redirectTo: "/main" });
+    //}]);
+
 
     /////////////////// Simple Binding Demo
 
