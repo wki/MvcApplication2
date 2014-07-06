@@ -30,10 +30,13 @@ namespace Web
 
             // Hint: a Bundle is not minified
             bundles.Add(new Bundle("~/bundles/site").Include(
+                      "~/Scripts/jquery-{version}.js",
+                      "~/Scripts/toastr.js",
                       "~/Scripts/site.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/toastr.css",
                       "~/Content/site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,

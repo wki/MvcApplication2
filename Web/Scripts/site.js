@@ -19,31 +19,82 @@
             .otherwise( { redirectTo: "/main" } );
     }]);
 
+    // global info storage for holding page-global things
+    app.value("info", {
+        message: "Welcome here",   // Messagebox displayed when truthy
+        area: "main"
+    });
 
-    /////////////////// Global Page Controller
-    app.controller("GlobalPageController", ["$scope", function ($scope) {
-        $scope.message = "inside global page controller";
+    /////////////////// Message directive
+    app.directive("wkMessage", function () {
+        return {
+            restrict: "ACE",
+            templateUrl: "/templates/wk-message.html",
+            controller: "MessageController"
+        };
+    });
+
+    app.controller("MessageController", ["$scope", "$timeout", "info", function ($scope, $timeout, info) {
+        var timer = null;
+
+        function start_timer() {
+            stop_timer();
+            timer = $timeout(close, 10000);
+        }
+
+        function stop_timer() {
+            if (timer)$timeout.cancel(timer);
+        }
+
+        function close() {
+            console.log("closing");
+            info.message = "";
+            stop_timer();
+        }
+
+        $scope.info = info;
+        $scope.close = close
+
+        if (info.message) start_timer();
+
+        $scope.$watch(
+            function() { return info.message },
+            function (newValue, oldValue) {
+                console.log("message changed from " + oldValue + " to " + newValue);
+                if (newValue) {
+                    start_timer();
+                    toastr.info("message kept for 10 seconds");
+                }
+            }
+        );
     }]);
 
+    /////////////////// Global Page Controller
+    //app.controller("GlobalPageController", ["$scope", function ($scope) {
+    //    $scope.message = "inside global page controller";
+    //}]);
+
     /////////////////// About Controller
-    app.controller("AboutController"), ["$scope", function ($scope) {
+    app.controller("AboutController", ["$scope", "info", function ($scope, info) {
         console.log("running about controller");
-        $scope.message = "Now in About Controller's realm.";
-    }];
+        info.message = "Now in About Controller's realm.";
+        info.area = "about";
+    }]);
 
     /////////////////// Main Controller
-    app.controller("MainController", ["$scope", function ($scope) {
+    app.controller("MainController", ["$scope", "info", function ($scope, info) {
         console.log("running main controller");
-        $scope.message = "Now in Main Controller's realm.";
+        info.message = "Now in Main Controller's realm.";
+        info.area = "main";
     }]);
 
     /////////////// Top Navbar
-    app.directive("wkNavbar", [function () {
+    app.directive("wkNavbar", function () {
         return {
             restrict: "ACE",
             templateUrl: "/templates/wk-navbar.html"
         };
-    }]);
+    });
 
 
     /////////////////// Simple Binding Demo
@@ -72,7 +123,9 @@
 
     app.controller(
         "InfoController",
-        ["$scope", "$http", "$interval", function ($scope, $http, $interval)
+        [
+            "$scope", "$http", "$interval", "info",
+            function ($scope, $http, $interval, info)
     {
         $scope.id = 43;
         $scope.data = "hello";
@@ -88,6 +141,7 @@
 
         function onDataReceived(response) {
             $scope.data = response.data;
+            info.message = "Received: " + response.data;
         }
 
         $scope.update = function () {
