@@ -563,6 +563,7 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\text.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Templates\about.html" />
     <Content Include="Templates\main.html" />
     <Content Include="Templates\wk-navbar.html">
       <BrowseToURL>~/Templates/navbar.html</BrowseToURL>

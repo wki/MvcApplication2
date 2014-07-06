@@ -6,6 +6,37 @@
 (function () {
     var app = angular.module("WkiApp", ["ngRoute"]);
 
+    app.config(["$routeProvider", function ($routeProvider) {
+        $routeProvider
+            .when("/main", {
+                templateUrl: "/templates/main.html",
+                controller: "MainController"
+            })
+            .when("/about", {
+                templateUrl: "/templates/about.html",
+                controller: "AboutController"
+            })
+            .otherwise( { redirectTo: "/main" } );
+    }]);
+
+
+    /////////////////// Global Page Controller
+    app.controller("GlobalPageController", ["$scope", function ($scope) {
+        $scope.message = "inside global page controller";
+    }]);
+
+    /////////////////// About Controller
+    app.controller("AboutController"), ["$scope", function ($scope) {
+        console.log("running about controller");
+        $scope.message = "Now in About Controller's realm.";
+    }];
+
+    /////////////////// Main Controller
+    app.controller("MainController", ["$scope", function ($scope) {
+        console.log("running main controller");
+        $scope.message = "Now in Main Controller's realm.";
+    }]);
+
     /////////////// Top Navbar
     app.directive("wkNavbar", [function () {
         return {
@@ -13,16 +44,6 @@
             templateUrl: "/templates/wk-navbar.html"
         };
     }]);
-
-
-    //app.config(["$routeProvider", function ($routeProvider) {
-    //    $routeProvider
-    //        .when("/xxx", {
-    //            templateURL: "xxx.html",
-    //            controller: "XxxController"
-    //        })
-    //        .otherwise({ redirectTo: "/main" });
-    //}]);
 
 
     /////////////////// Simple Binding Demo
