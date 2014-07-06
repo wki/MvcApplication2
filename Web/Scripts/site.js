@@ -28,7 +28,6 @@
     /////////////////// Message directive
     app.directive("wkMessage", function () {
         return {
-            restrict: "ACE",
             templateUrl: "/templates/wk-message.html",
             controller: "MessageController"
         };
@@ -91,7 +90,6 @@
     /////////////// Top Navbar
     app.directive("wkNavbar", function () {
         return {
-            restrict: "ACE",
             templateUrl: "/templates/wk-navbar.html"
         };
     });
