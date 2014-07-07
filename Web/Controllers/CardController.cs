@@ -14,6 +14,12 @@ namespace Web.Controllers
     //[Authorize]
     public class CardController : ApiController
     {
+        public class CardListItem
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
+
         public static ILog Log = LogManager.GetCurrentClassLogger();
         private ICollectService collectService;
 
@@ -23,11 +29,13 @@ namespace Web.Controllers
         }
 
         // GET: api/Card
-        public IQueryable<BusinessCardState> Get()
+        public IEnumerable<CardListItem> Get()
         {
-            using (RepositoryContext context = new RepositoryContext())
+            using (var context = new RepositoryContext())
             {
-                return context.Set<BusinessCardState>();
+                return context.BusinessCards
+                    .Select(b => new CardListItem { Id = b.Id, Name = b.Name })
+                    .ToList<CardListItem>() ;
             }
         }
 
@@ -36,7 +44,7 @@ namespace Web.Controllers
         {
             BusinessCardState card;
 
-            using (RepositoryContext context = new RepositoryContext())
+            using (var context = new RepositoryContext())
             {
                 card = context.BusinessCards.SingleOrDefault(b => b.Id == id);
             }
@@ -56,8 +64,15 @@ namespace Web.Controllers
         }
 
         // POST: api/Card
-        public void Post([FromBody]string value)
+        // Test with: (Caution: Power-shell needs "" quotes.)
+        // curl.exe -vXPOST -H "Content-Type: application/json" -d "{Name: 'howey5', EmployeeId: 2, Status: 1}" http://localhost:49230/api/card
+        public void Post([FromBody] BusinessCardState newCard)
         {
+            using (var context = new RepositoryContext())
+            {
+                context.BusinessCards.Add(newCard);
+                context.SaveChanges();
+            }
         }
 
         // PUT: api/Card/5
