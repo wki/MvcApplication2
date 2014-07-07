@@ -6,10 +6,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using MvcApplication2.Domain.Measurement;
+using MvcApplication2.Repository.EF;
 
 namespace Web.Controllers
 {
-    [Authorize]
+    // TODO: add authorization when time comes.
+    //[Authorize]
     public class CardController : ApiController
     {
         public static ILog Log = LogManager.GetCurrentClassLogger();
@@ -21,19 +23,36 @@ namespace Web.Controllers
         }
 
         // GET: api/Card
-        public IEnumerable<string> Get()
+        public IQueryable<BusinessCardState> Get()
         {
-            Log.Debug("Calling 'Get' on card");
-
-            collectService.DoSomething("huhu");
-
-            return new string[] { "value1", "value2" };
+            using (RepositoryContext context = new RepositoryContext())
+            {
+                return context.Set<BusinessCardState>();
+            }
         }
 
         // GET: api/Card/5
-        public string Get(int id)
+        public BusinessCardState Get(int id)
         {
-            return "value";
+            BusinessCardState card;
+
+            using (RepositoryContext context = new RepositoryContext())
+            {
+                card = context.BusinessCards.SingleOrDefault(b => b.Id == id);
+            }
+
+            if (card == null)
+            {
+                throw new HttpResponseException(
+                    new HttpResponseMessage
+                    {
+                        StatusCode = HttpStatusCode.NotFound,
+                        Content = new StringContent("Card not found")
+                    }
+                );
+            }
+
+            return card;
         }
 
         // POST: api/Card
