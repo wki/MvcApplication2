@@ -15,33 +15,30 @@ namespace Web.Controllers
     public class CardController : ApiController
     {
         private RepositoryContext context;
-
-        public class CardListItem
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-        }
-
         public static ILog Log = LogManager.GetCurrentClassLogger();
         private ICollectService collectService;
 
         public CardController(ICollectService collectService)
         {
+            Log.Debug("Constructor");
+
             this.collectService = collectService;
             this.context = new RepositoryContext();
         }
 
         // GET: api/Card
-        public IEnumerable<CardListItem> Get()
+        public IEnumerable<BusinessCardState> Get()
         {
-            return context.BusinessCards
-                .Select(b => new CardListItem { Id = b.Id, Name = b.Name })
-                .ToList<CardListItem>() ;
+            Log.Debug("GET all");
+
+            return context.BusinessCards.ToList<BusinessCardState>();
         }
 
         // GET: api/Card/5
         public BusinessCardState Get(int id)
         {
+            Log.Debug("GET id");
+
             BusinessCardState card = context.BusinessCards.SingleOrDefault(b => b.Id == id);
 
             if (card == null)
@@ -63,6 +60,8 @@ namespace Web.Controllers
         // curl.exe -vXPOST -H "Content-Type: application/json" -d "{Name: 'howey5', EmployeeId: 2, Status: 1}" http://localhost:49230/api/card
         public void Post([FromBody] BusinessCardState newCard)
         {
+            Log.Debug("Post");
+
             context.BusinessCards.Add(newCard);
             context.SaveChanges();
         }
@@ -81,6 +80,7 @@ namespace Web.Controllers
         {
             if (disposing)
             {
+                Log.Debug("Disposing db Context");
                 context.Dispose();
             }
             
