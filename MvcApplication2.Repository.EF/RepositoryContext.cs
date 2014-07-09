@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
@@ -9,6 +10,8 @@ namespace MvcApplication2.Repository.EF
 {
     public class RepositoryContext : DbContext
     {
+        public static ILog Log = LogManager.GetCurrentClassLogger();
+
         public RepositoryContext()
             // :base(ConfigurationService.ConnectionString)
             : base("name=DefaultConnection")
@@ -19,5 +22,10 @@ namespace MvcApplication2.Repository.EF
         public DbSet<BusinessCardState> BusinessCards { get; set; }
         public DbSet<HistoryEntryState> HistoryEntries { get; set; }
 
+        protected override void Dispose(bool disposing)
+        {
+            Log.Debug("Disposing RepositoryContext");
+            base.Dispose(disposing);
+        }
     }
 }
