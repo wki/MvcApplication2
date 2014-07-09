@@ -20,7 +20,7 @@ app.config(["$routeProvider", function ($routeProvider) {
 
 // global info storage for holding page-global things
 app.value("info", {
-    message: "Welcome here",   // Messagebox displayed when truthy
+    message: "Welcome at my demo site",   // Messagebox displayed when truthy
     area: "main"
 });
 
@@ -61,7 +61,7 @@ app.controller("MessageController", ["$scope", "$timeout", "info", function ($sc
             console.log("message changed from " + oldValue + " to " + newValue);
             if (newValue) {
                 start_timer();
-                toastr.info("message kept for 10 seconds");
+                toastr.info("message displayed for 10 seconds");
             }
         }
     );
@@ -75,14 +75,14 @@ app.controller("MessageController", ["$scope", "$timeout", "info", function ($sc
 /////////////////// About Controller
 app.controller("AboutController", ["$scope", "info", function ($scope, info) {
     console.log("running about controller");
-    info.message = "Now in About Controller's realm.";
+    info.message = "Now in About Controller's realm";
     info.area = "about";
 }]);
 
 /////////////////// Main Controller
 app.controller("MainController", ["$scope", "info", function ($scope, info) {
     console.log("running main controller");
-    info.message = "Now in Main Controller's realm.";
+    info.message = "Now in Main Controller's realm";
     info.area = "main";
 }]);
 
