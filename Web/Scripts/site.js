@@ -3,7 +3,7 @@
  *
 */
 
-var app = angular.module("WkiApp", ["ngRoute"]);
+var app = angular.module("WkiApp", ["ngRoute", "ngAnimate"]);
 
 app.config(["$routeProvider", function ($routeProvider) {
     $routeProvider
