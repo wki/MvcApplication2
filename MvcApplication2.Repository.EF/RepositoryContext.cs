@@ -16,9 +16,16 @@ namespace MvcApplication2.Repository.EF
             // :base(ConfigurationService.ConnectionString)
             : base("name=DefaultConnection")
         {
+            Log.Debug("Initializing RepositoryContext");
+
+            Database.SetInitializer(new RepositoryInitializer());
         }
 
-        
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //}
+
         public DbSet<BusinessCardState> BusinessCards { get; set; }
         public DbSet<HistoryEntryState> HistoryEntries { get; set; }
 
