@@ -18,6 +18,7 @@ namespace MvcApplication2.Repository.EF
         {
             Log.Debug("Initializing RepositoryContext");
 
+      
             Database.SetInitializer(new RepositoryInitializer());
         }
 

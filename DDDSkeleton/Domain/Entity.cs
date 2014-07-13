@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DDDSkeleton.Domain
 {
-    public class Entity<IdType> : IEquatable<Entity<IdType>>, DomainObject, IPublish
+    public class Entity<IdType> : DomainObject, IEquatable<Entity<IdType>>, IPublish
     {
         public IdType Id { get; private set; }
 
@@ -45,7 +45,7 @@ namespace DDDSkeleton.Domain
             return !(entity1 == entity2);
         }
 
-        public override bool Equals(Entity<IdType> other)
+        public bool Equals(Entity<IdType> other)
         {
             return other != null
                 && other is Entity<IdType>

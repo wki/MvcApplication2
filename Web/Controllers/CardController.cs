@@ -24,13 +24,16 @@ namespace Web.Controllers
 
             this.collectService = collectService;
             this.context = new RepositoryContext();
+
+            // simple SQL Logging
+            // this.context.Database.Log = Log.Debug;
         }
 
         // GET: api/Card
         public IEnumerable<BusinessCardState> Get()
         {
             Log.Debug("GET all");
-
+            context.Configuration.LazyLoadingEnabled = false;
             return context.BusinessCards.ToList<BusinessCardState>();
         }
 
