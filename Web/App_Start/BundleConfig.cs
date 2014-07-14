@@ -23,11 +23,29 @@ namespace Web
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                      "~/Scripts/angular.js",
-                      "~/Scripts/angular-animate.js",
-                      "~/Scripts/angular-resource.js",
-                      "~/Scripts/angular-route.js"));
+            bundles.Add(
+                new ScriptBundle("~/bundles/angular").Include(
+                    "~/Scripts/angular.js",
+                    "~/Scripts/angular-animate.js",
+                    "~/Scripts/angular-resource.js",
+                    "~/Scripts/angular-route.js"
+                )
+            );
+
+            bundles.Add(
+                new Bundle("~/bundles/ember").Include(
+                    "~/Scripts/jquery-{version}.js",
+                    "~/Scripts/handlebars.js",
+                    "~/Scripts/ember.js"
+                )
+            );
+
+            bundles.Add(
+                new Bundle("~/bundles/embersite").Include(
+                    "~/Scripts/embersite.js"
+                )
+            );
+
 
             // Hint: a Bundle is not minified
             bundles.Add(new Bundle("~/bundles/site").Include(
