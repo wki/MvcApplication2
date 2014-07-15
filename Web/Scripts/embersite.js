@@ -9,19 +9,16 @@ var App = Ember.Application.create({
 });
 
 App.Router.map(function () {
-    this.resource("user", { path: "/user/:login" });
+    this.resource("card", { path: "card/:id" }, function () {
+        this.resource("content");
+        this.resource("options");
+        this.resource("order");
+    });
 });
 
 // ----------------- INDEX
 App.IndexRoute = Ember.Route.extend({
-    model: function () {
-        return [
-            { name: "Wolfgang", login: "wki" },
-            { name: "Domm",     login: "domm" },
-            { name: "Bevacqua", login: "bevacqua" }
-        ];
-    }
- });
+});
 
 App.IndexController = Ember.ArrayController.extend({
     renderedOn: function () {
@@ -34,11 +31,9 @@ App.IndexController = Ember.ArrayController.extend({
     }
 });
 
-// ----------------- USER
-
-App.UserRoute = Ember.Route.extend({
-    model: function (params) {
-        return Ember.$.getJSON("https://api.github.com/users/" + params.login);
+// ------------------ CARD
+App.CardRoute = Ember.Route.extend({
+    model: function () {
+        return { id: 42, foo: "bar" };
     }
 });
-
