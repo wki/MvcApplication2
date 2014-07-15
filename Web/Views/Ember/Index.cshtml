@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ember Demo</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">...</button>
+                <a class="navbar-brand" href="#">WKI</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#/card/42">Card-42</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="ember-app">
+    </div>
+
+    <script type="text/x-handlebars" data-template-name="application">
+        {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="index">
+        <p>This is my sample dummy empty index page</p>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="card">
+        <div class="row">
+            <div class="col-md-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class=""><a href="#">content</a></li>
+                    <li class="active"><a href="#">options</a></li>
+                    <li class=""><a href="#">order</a></li>
+                </ul>
+                <div class="panel panel-default" style="border-top: none">
+                    <div class="panel-body">
+                        {{outlet}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Preview</h3>
+                    </div>
+                    <div class="panel-body">
+                        Preview - coming soon.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="content">
+        card content
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="options">
+        card options
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="order">
+        card order
+    </script>
+
+@*@Scripts.Render("~/bundles/ember")*@
+<script src="/Scripts/jquery-2.1.1.js"></script>
+<script src="/Scripts/handlebars.js"></script>
+<script src="/Scripts/ember.js"></script>
+@Scripts.Render("~/bundles/embersite")
+</html>
