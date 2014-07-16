@@ -45,13 +45,20 @@
         <div class="row">
             <div class="col-md-8">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class=""><a href="#">content</a></li>
-                    <li class="active"><a href="#">options</a></li>
-                    <li class=""><a href="#">order</a></li>
+                    {{! see: http://stackoverflow.com/questions/16380523/create-a-li-class-active-around-an-active-linkto }}
+
+                    {{#link-to 'card.content' id tagName='li' href=false}}
+                        {{#link-to 'card.content' id}}content{{/link-to}}
+                    {{/link-to}}
+                    {{#link-to 'card.options' id tagName='li' href=false}}
+                        {{#link-to 'card.options' id}}options{{/link-to}}
+                    {{/link-to}}
+                    {{#link-to 'card.order' id tagName='li' href=false}}
+                        {{#link-to 'card.order' id}}order{{/link-to}}
+                    {{/link-to}}
                 </ul>
                 <div class="panel panel-default" style="border-top: none">
                     <div class="panel-body">
-                        <p>Area: {{area}}</p>
                         {{outlet}}
                     </div>
                 </div>
@@ -69,8 +76,31 @@
         </div>
     </script>
 
+    <script type="text/x-handlebars" data-template-name="card/index">
+        card index
+    </script>
+
     <script type="text/x-handlebars" data-template-name="card/content">
-        card content
+        <div class="container">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name:</label>
+                    <div class="col-sm-10">
+                        {{input name="name" value=name class="form-control"}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Department:</label>
+                    <div class="col-sm-10">
+                        {{input name="department" value=department class="form-control"}}
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="container text-right">
+            should link to next tab. does not work.
+            {{#link-to 'card.options' id}}<button type="button" class="btn btn-primary">Next</button>{{/link-to}}
+        </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="card/options">

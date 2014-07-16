@@ -5,11 +5,14 @@
 /// <reference path="ember.js" />
 
 var App = Ember.Application.create({
-    rootElement: "#ember-app"
+    rootElement: "#ember-app",
+    LOG_TRANSITIONS: true,
+    LOG_TRANSITIONS_INTERLAL: true
+
 });
 
 App.Router.map(function () {
-    this.resource("card", { path: "card/:id" }, function () {
+    this.resource("card", { path: "/card/:card_id" }, function () {
         this.route("content");
         this.route("options");
         this.route("order");
@@ -34,35 +37,52 @@ App.IndexController = Ember.ArrayController.extend({
 // ------------------ CARD
 
 App.CardController = Ember.ObjectController.extend({
-    area: "foo"
+    area: "foo",
 });
 
 App.CardRoute = Ember.Route.extend({
-    model: function () {
-        return { id: 42, foo: "bar" };
+    model: function (params) {
+        //console.log(params);
+        return { id: params.card_id, foo: "bar-" + params.card_id };
+    }
+    //,
+    //setupController: function (controller, model) {
+    //    controller.set('area', 'content');
+    //}
+});
+
+App.CardIndexRoute = Ember.Route.extend({
+    afterModel: function (card) {
+        //console.log("redirecting. card =");
+        //console.log(card);
+        this.transitionTo('card.content', card.id);
     }
 });
 
-App.CardRoute = Ember.Route.extend({
-    setupController: function (controller, model) {
-        controller.set('area', 'content');
-    }
+App.CardContentController = Ember.ObjectController.extend({
+    name: 'foo',
+    department: 'IT'
 });
 
 App.CardContentRoute = Ember.Route.extend({
+    //model: function() {
+    //    return this.modelFor('card');
+    //},
     setupController: function (controller, model) {
-        this.controllerFor('CardController').set('area', 'content');
+        console.log('model for card.content');
+        console.log(model);
+        this.controllerFor('Card').set('area', 'content');
     }
 });
 
 App.CardOptionsRoute = Ember.Route.extend({
     setupController: function (controller, model) {
-        this.controllerFor('CardController').set('area', 'options');
+        this.controllerFor('Card').set('area', 'options');
     }
 });
 
 App.CardOrderRoute = Ember.Route.extend({
     setupController: function (controller, model) {
-        this.controllerFor('CardController').set('area', 'order');
+        this.controllerFor('Card').set('area', 'order');
     }
 });
