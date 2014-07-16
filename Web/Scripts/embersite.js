@@ -61,7 +61,8 @@ App.CardIndexRoute = Ember.Route.extend({
 
 App.CardContentController = Ember.ObjectController.extend({
     name: 'foo',
-    department: 'IT'
+    department: 'IT',
+    id: 0
 });
 
 App.CardContentRoute = Ember.Route.extend({
@@ -72,6 +73,7 @@ App.CardContentRoute = Ember.Route.extend({
         console.log('model for card.content');
         console.log(model);
         this.controllerFor('Card').set('area', 'content');
+        controller.set('id', model.id);
     }
 });
 
