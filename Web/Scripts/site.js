@@ -15,12 +15,24 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: "/templates/about.html",
             controller: "AboutController"
         })
+        .when("/orders", {
+            templateUrl: "/templates/orders.html",
+            controller: "OrdersController"
+        })
+        .when("/orders/:order_id", {
+            templateUrl: "/templates/orders.html",
+            controller: "OrdersController"
+        })
+        .when("/orders/:order_id/:page", {
+            templateUrl: "/templates/orders.html",
+            controller: "OrdersController"
+        })
         .otherwise({ redirectTo: "/main" });
 }]);
 
 // global info storage for holding page-global things
 app.value("info", {
-    message: "Welcome at my demo site",   // Messagebox displayed when truthy
+    message: "",   // Messagebox displayed when truthy
     area: "main"
 });
 
@@ -84,6 +96,16 @@ app.controller("MainController", ["$scope", "info", function ($scope, info) {
     console.log("running main controller");
     info.message = "Now in Main Controller's realm";
     info.area = "main";
+}]);
+
+app.controller("OrdersController", ["$scope", "$routeParams", "info", function ($scope, $routeParams, info) {
+    info.message = "";
+    info.area = "orders;"
+
+    $scope.page = $routeParams.page || "front";
+    $scope.orderUrl = '#/orders/' + $routeParams.order_id;
+
+    console.log($routeParams);
 }]);
 
 /////////////// Top Navbar

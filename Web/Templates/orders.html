@@ -1,0 +1,28 @@
+﻿<h1>Orders</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <ul class="nav nav-tabs" role="tablist">
+            <li data-ng-class="page == 'front' ? 'active' : ''"><a href="{{orderUrl}}/front">Front</a></li>
+            <li data-ng-class="page == 'back' ? 'active' : ''"><a href="{{orderUrl}}/back">Back</a></li>
+            <li data-ng-class="page == 'info' ? 'active' : ''"><a href="{{orderUrl}}/info">Info</a></li>
+            <li data-ng-class="page == 'confirm' ? 'active' : ''"><a href="{{orderUrl}}/confirm">Confirm</a></li>
+        </ul>
+        <div class="panel panel-default" style="border-top: none; border-top-left-radius: 0; border-top-right-radius: 0">
+            <div class="panel-body">
+                Content
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Preview</div>
+            <div class="panel-body">
+                <br />
+                Preview 
+                <br />
+                &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
