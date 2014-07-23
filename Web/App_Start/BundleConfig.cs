@@ -28,7 +28,8 @@ namespace Web
                     "~/Scripts/angular.js",
                     "~/Scripts/angular-animate.js",
                     "~/Scripts/angular-resource.js",
-                    "~/Scripts/angular-route.js"
+                    "~/Scripts/angular-route.js",
+                    "~/Scripts/angular-ui-router.js"
                 )
             );
 

@@ -3,8 +3,76 @@
  *
 */
 
-var app = angular.module("WkiApp", ["ngRoute", "ngAnimate"]);
+var app = angular.module("WkiApp", ["ui.router", "ngRoute"]);
 
+app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
+// app.config(["$stateProvider", function ($stateProvider) {
+
+    $urlRouterProvider
+        //.when("/about", {
+        //    templateUrl: "/templates/about.html",
+        //    controller: "AboutController"
+        //})
+        .otherwise("/orders");
+
+    $stateProvider
+        /***************** List */
+        .state("list", {
+            url: "/list",
+            // templateUrl: "/templates/list.html",
+            views: {
+                "@": {
+                    templateUrl: "/templates/list.html"
+                },
+                "list@list": {
+                    templateUrl: "/templates/list/list.html"
+                }
+            }
+        })
+
+        /***************** Orders */
+        .state("orders", {
+            abstract: true,
+            url: "/orders",
+            templateUrl: "/templates/orders.html",
+            controller: "OrderController"
+        })
+        .state("orders.front", {
+            url: "/front",
+            templateUrl: "/templates/orders/front.html"
+        })
+        .state("orders.back", {
+            url: "/back",
+            templateUrl: "/templates/orders/back.html"
+        })
+        .state("orders.info", {
+            url: "/info",
+            templateUrl: "/templates/orders/info.html"
+        })
+        .state("orders.confirm", {
+            url: "/confirm",
+            templateUrl: "/templates/orders/confirm.html"
+        })
+        .state("info", {
+            url: "/info",
+            templateUrl: "/templates/info.html"
+        });
+
+}]);
+
+app.controller("OrderController", ["$scope", "$rootScope", "$state", function ($scope, $rootScope, $state) {
+    // $scope.state = $state;
+    $rootScope.state = $state;
+    console.log("State: " + $state.current.name);
+}]);
+
+// global info storage for holding page-global things
+app.value("info", {
+    message: "",   // Messagebox displayed when truthy
+    area: "main",
+});
+
+/*
 app.config(["$routeProvider", function ($routeProvider) {
     $routeProvider
         .when("/main", {
@@ -30,12 +98,8 @@ app.config(["$routeProvider", function ($routeProvider) {
         .otherwise({ redirectTo: "/main" });
 }]);
 
-// global info storage for holding page-global things
-app.value("info", {
-    message: "",   // Messagebox displayed when truthy
-    area: "main"
-});
-
+*/
+/*
 /////////////////// Message directive
 app.directive("wkMessage", function () {
     return {
@@ -83,6 +147,7 @@ app.controller("MessageController", ["$scope", "$timeout", "info", function ($sc
 //app.controller("GlobalPageController", ["$scope", function ($scope) {
 //    $scope.message = "inside global page controller";
 //}]);
+*/
 
 /////////////////// About Controller
 app.controller("AboutController", ["$scope", "info", function ($scope, info) {
@@ -92,6 +157,7 @@ app.controller("AboutController", ["$scope", "info", function ($scope, info) {
 }]);
 
 /////////////////// Main Controller
+/*
 app.controller("MainController", ["$scope", "info", function ($scope, info) {
     console.log("running main controller");
     info.message = "Now in Main Controller's realm";
@@ -107,17 +173,22 @@ app.controller("OrdersController", ["$scope", "$routeParams", "info", function (
 
     console.log($routeParams);
 }]);
+*/
 
 /////////////// Top Navbar
-app.directive("wkNavbar", function () {
+app.directive("wkNavbar", ["$state", function ($state) {
     return {
-        templateUrl: "/templates/wk-navbar.html"
+        templateUrl: "/templates/wk-navbar.html",
+        link: function (scope) {
+            console.log("$state:"); console.log($state);
+            scope.state = $state;
+        }
     };
-});
+}]);
 
 
 /////////////////// Simple Binding Demo
-
+/*
 app.service("greeter", function () {
     this.name = "foo"
     this.greeting = function () {
@@ -165,3 +236,4 @@ app.controller(
                 .then(onDataReceived);
         };
     }]);
+*/

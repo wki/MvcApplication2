@@ -3,15 +3,13 @@
 <div class="row">
     <div class="col-md-8">
         <ul class="nav nav-tabs" role="tablist">
-            <li data-ng-class="page == 'front' ? 'active' : ''"><a href="{{orderUrl}}/front">Front</a></li>
-            <li data-ng-class="page == 'back' ? 'active' : ''"><a href="{{orderUrl}}/back">Back</a></li>
-            <li data-ng-class="page == 'info' ? 'active' : ''"><a href="{{orderUrl}}/info">Info</a></li>
-            <li data-ng-class="page == 'confirm' ? 'active' : ''"><a href="{{orderUrl}}/confirm">Confirm</a></li>
+            <li data-ng-class="state.includes('orders.front.**') ? 'active' : ''"><a href="#/orders/front">Front</a></li>
+            <li data-ng-class="state.includes('orders.back.**') ? 'active' : ''"><a href="#/orders/back">Back</a></li>
+            <li data-ng-class="state.includes('orders.info.**') ? 'active' : ''"><a href="#/orders/info">Info</a></li>
+            <li data-ng-class="state.includes('orders.confirm.**') ? 'active' : ''"><a href="#/orders/confirm">Confirm</a></li>
         </ul>
         <div class="panel panel-default" style="border-top: none; border-top-left-radius: 0; border-top-right-radius: 0">
-            <div class="panel-body">
-                Content
-            </div>
+            <div class="panel-body" data-ui-view></div>
         </div>
     </div>
     <div class="col-md-4">

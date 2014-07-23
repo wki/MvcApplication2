@@ -589,8 +589,15 @@
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Templates\about.html" />
+    <Content Include="Templates\info.html" />
+    <Content Include="Templates\list.html" />
+    <Content Include="Templates\list\list.html" />
     <Content Include="Templates\main.html" />
     <Content Include="Templates\orders.html" />
+    <Content Include="Templates\orders\back.html" />
+    <Content Include="Templates\orders\confirm.html" />
+    <Content Include="Templates\orders\front.html" />
+    <Content Include="Templates\orders\info.html" />
     <Content Include="Templates\wk-message.html" />
     <Content Include="Templates\wk-navbar.html">
       <BrowseToURL>~/Templates/navbar.html</BrowseToURL>
