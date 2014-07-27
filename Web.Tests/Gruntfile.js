@@ -5,11 +5,11 @@
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.initConfig({
-        shell: {
-            options: {
-                stdout: true
-            }
-        },
+        //shell: {
+        //    options: {
+        //        stdout: true
+        //    }
+        //},
         connect: {
             options: {
                 base: '../Web'
