@@ -12,10 +12,10 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li data-ng-class="state.includes('list.**') ? 'active' : ''"><a href="#/list">List</a></li>
-                <li data-ng-class="state.includes('orders.**') ? 'active' : ''"><a href="#/orders/front">Orders</a></li>
-                <li data-ng-class="state.includes('info.**') ? 'active' : ''"><a href="#/info">Info</a></li>
-                <li data-ng-class="state.includes('about.**') ? 'active' : ''"><a href="#/about">About</a></li>
+                <li data-ng-class="{ active: state.includes('list.**') }"><a href="#/list">List</a></li>
+                <li data-ng-class="{ active: state.includes('orders.**') }"><a href="#/orders/front">Orders</a></li>
+                <li data-ng-class="{ active: state.includes('info.**') }"><a href="#/info">Info</a></li>
+                <li data-ng-class="{ active: state.includes('about.**') }"><a href="#/about">About</a></li>
             </ul>
             <form class="navbar-form navbar-right" role="search">
                 <div class="form-group">

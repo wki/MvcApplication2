@@ -39,7 +39,8 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
         })
         .state("orders.front", {
             url: "/front",
-            templateUrl: "/templates/orders/front.html"
+            templateUrl: "/templates/orders/front.html",
+            controller: "OrderFrontController"
         })
         .state("orders.back", {
             url: "/back",
@@ -64,6 +65,15 @@ app.controller("OrderController", ["$scope", "$rootScope", "$state", function ($
     // $scope.state = $state;
     $rootScope.state = $state;
     console.log("State: " + $state.current.name);
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        console.log("State change: " + fromState.name + " to " + toState.name);
+    });
+
+}]);
+
+app.controller("OrderFrontController", ["$scope", "$state", function ($scope, $state) {
+
 }]);
 
 // global info storage for holding page-global things
@@ -186,6 +196,23 @@ app.directive("wkNavbar", ["$state", function ($state) {
     };
 }]);
 
+
+app.directive("wkBreadcrumb", ["$state", function ($state) {
+
+    return {
+        templateUrl: "/templates/wk-breadcrumb.html",
+        link: function (scope) {
+            console.log("breadcrumb.link function called.");
+
+            scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+                console.log("Breadcrumb -- State change: " + fromState.name + " to " + toState.name);
+                console.log("current state: " + $state.current.name);
+                console.log($state);
+            });
+
+        }
+    }
+}]);
 
 /////////////////// Simple Binding Demo
 /*

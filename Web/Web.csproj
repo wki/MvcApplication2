@@ -598,6 +598,7 @@
     <Content Include="Templates\orders\confirm.html" />
     <Content Include="Templates\orders\front.html" />
     <Content Include="Templates\orders\info.html" />
+    <Content Include="Templates\wk-breadcrumb.html" />
     <Content Include="Templates\wk-message.html" />
     <Content Include="Templates\wk-navbar.html">
       <BrowseToURL>~/Templates/navbar.html</BrowseToURL>
