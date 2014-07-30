@@ -100,10 +100,14 @@
     <Content Include="App.config" />
     <Content Include="Gruntfile.js" />
     <Content Include="README.txt" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\jasmine.js" />
     <Content Include="test\karma.conf.js" />
     <Content Include="test\lib\chai-sugar.js" />
     <Content Include="test\mocha.conf.js" />
     <Content Include="test\unit\minimal_test.js" />
+    <Content Include="Scripts\_references.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".node\grunt.cmd" />

@@ -1,4 +1,5 @@
-﻿describe("Minimal Test", function () {
+﻿
+describe("Minimal Test", function () {
     it("should pass", function () {
         var x = [];
         // expect(x).not.to.be.a('null');
@@ -38,5 +39,20 @@ describe("Order Controller", function () {
     it("should be resolvable", function () {
         var controller = module.controller("OrderController");
         expect(controller).toBeDefined();
+    });
+});
+
+describe("Generated Test", function () {
+    var x;
+    beforeEach(function () {
+        x = true;
+    });
+
+    it("should succeed", function () {
+        expect(x).toBeTruthy();
+    });
+
+    it("should fail", function () {
+        expect(x).toBeFalsy();
     });
 });
