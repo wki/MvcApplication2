@@ -17,7 +17,7 @@ namespace EventBus.Tests
     public class BadThingHappened     : SomethingHappened {}
     public class AnotherThingHappened : IEvent {}
 
-    public class ServiceBase
+    public class ServiceBase : IPublish
     {
         public int nrEventsHandled;
 
