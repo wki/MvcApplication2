@@ -250,6 +250,7 @@
     <Content Include="Content\toastr.less" />
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
+    <None Include="Properties\PublishProfiles\IIS8.pubxml" />
     <None Include="Properties\PublishProfiles\My Web Server.pubxml" />
     <Content Include="Scripts\ember.js" />
     <Content Include="Scripts\ember.min.js" />
