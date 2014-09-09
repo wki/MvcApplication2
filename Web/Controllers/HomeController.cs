@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Web.Infrastructure.Managers;
 using Web.Configuration;
 using MvcApplication2.Domain.Measurement;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -22,6 +23,7 @@ namespace Web.Controllers
         public HomeController(IManager manager, ICollectService collectService)
         {
             Log.Debug("initiating Home Controller");
+
             this.manager = manager;
             this.collectService = collectService;
         }
@@ -32,6 +34,9 @@ namespace Web.Controllers
             var messageQConfig = MessageQConfiguration.Instance;
 
             collectService.DoSomething("adfasdf");
+
+            var p = ClaimsPrincipal.Current;
+            Log.Debug(p);
 
             ViewBag.Message =
                 this.manager.SomeValue() 

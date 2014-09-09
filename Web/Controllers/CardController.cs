@@ -7,11 +7,13 @@ using System.Net.Http;
 using System.Web.Http;
 using MvcApplication2.Domain.Measurement;
 using MvcApplication2.Repository.EF;
+using System.Security.Claims;
+using System.Threading;
 
 namespace Web.Controllers
 {
     // TODO: add authorization when time comes.
-    //[Authorize]
+    [Authorize]
     public class CardController : ApiController
     {
         private RepositoryContext context;
@@ -21,6 +23,10 @@ namespace Web.Controllers
         public CardController(ICollectService collectService)
         {
             Log.Debug("Constructor");
+
+            var cp = ClaimsPrincipal.Current;
+            var u = User;
+            var wu = System.Web.HttpContext.Current.User;
 
             this.collectService = collectService;
             this.context = new RepositoryContext();

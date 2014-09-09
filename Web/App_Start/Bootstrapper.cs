@@ -53,8 +53,8 @@ namespace Web
             // init Logging Framework -- happens automatically based on config
             // init Storage
             // init Mail Sender
-            var messageQConfig = MessageQConfiguration.Instance;
-            var messageQ = new MessageQ.MessageQ(config: messageQConfig);
+            //var messageQConfig = MessageQConfiguration.Instance;
+            //var messageQ = new MessageQ.MessageQ(config: messageQConfig);
 
             // Eventbus must know container in order to resolve subscribing classes
             IHub eventBus = new Hub(container);
